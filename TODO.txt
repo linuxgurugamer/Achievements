@@ -13,3 +13,136 @@
 - submerge into an ocean
 - apollo 11
 - apollo 11 without quicksave
+
+
+Create configurable achievements from file for the following:
+
+All stock planets, and:
+
+STOCK_ALL
+STOCK_LANDABLE
+
+ALL_PLANETS
+ALL_PLANETS_WITHOUT_HOMEWORLD
+ALL_MOONS
+ALL_LANDABLE
+ALL_NONLANDABLE
+ALL_SPLASHABLE
+ALL_WITH_ATMOSPHERE
+
+
+ACHIEVEMENTS
+{
+	BODIES
+	{
+		name = 
+		body = name1
+		body = name2
+
+		or
+		bodies = name1 name2 ...
+	}
+	SURFACESAMPLE
+	{
+		key = keyname
+		title =
+		text =
+		bodies =
+	}
+	ORBITACHIEVEMENT
+	{
+		key = keyname
+		title =
+		text = 
+		bodies =
+		minAltitude =
+		maxAltitude =
+		minInclination = 0;
+		maxInclination = 90;
+		//  A value of 0 is a circular orbit, values between 0 and 1 form an elliptic orbit, 1 is a parabolic escape orbit, and greater than 1 is a hyperbola. 
+		minEccentricity = 0;
+		maxEccentricity = 0.999999;
+	}
+
+	LOCATION
+	{
+		name =
+		body =
+		// Following defines a rectangle if the second pair is set
+		latitude =
+		longitude =
+		// following second corner of rectangle, optional
+		latitude2 =   float N/S
+		longitude2 =  float E/W
+		// If second pair not set, then radius is needed
+		radius =
+	}
+
+
+	LANDING
+	{
+		key = 
+		title =
+		text =
+		bodies =
+		// following are all optional
+		splash = true
+		stableOrbit = false (if true, minAltitude MUST be set)
+		minAltitude =
+		maxDegreesLatitudeFromEquator =
+		locations = location1 location2
+	}
+}
+
+	Sample
+	======
+ACHIEVEMENTS
+{
+	BODIES
+	{
+		name = LANDABLE
+		body = Kerbin Eve Duna
+	}
+	BODIES
+	{
+		name = KERBIN
+		body = Kerbin
+	}
+	SURFACESAMPLE
+	{
+		key = allBodies
+		title = Pile of Dirt
+		text = Take surface samples on all planets and moons.
+		bodies = LANDABLE
+	}
+	ORBITACHIEVEMENT
+	{
+		key = keyname
+		title = Going Around and Around
+		text = Get into a stable orbit around a celestial body.
+		bodies = Kerbin
+	}
+	
+	LOCATION
+	{
+		name = MUN_CRATER_1
+		bodies = Mun
+		// Following defines a rectangle
+		latitude = 10.886 S
+		longitude = 81.182 E
+		radius = 44000
+	}
+	LANDING
+	{
+		key = mun.crater.1
+		title = Deep Impact
+		text = Land inside one of the big craters on the Mun
+		bodies = MUN
+		splash = false
+		// following are all optional
+		stableOrbit = true (if true, minAltitude MUST be set)
+		minAltitude = -1
+		maxDegreesLatitudeFromEquator = -1
+		locations = MUN_CRATER_1
+	}
+}

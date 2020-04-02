@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Achievements", "Achievements.csproj", "{D70F43EE-FAA3-4063-89B2-D1C6366E13FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Achievements", "Source\Achievements.csproj", "{D70F43EE-FAA3-4063-89B2-D1C6366E13FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF29052F-8A6B-475C-AC8D-220AEB3B4EF4}"
+	ProjectSection(SolutionItems) = preProject
+		Achievements.version = Achievements.version
+		buildRelease.bat = buildRelease.bat
+		CHANGES.txt = CHANGES.txt
+		deploy.bat = deploy.bat
+		jenkins.txt = jenkins.txt
+		LICENSE.txt = LICENSE.txt
+		SUGGESTIONS.txt = SUGGESTIONS.txt
+		TODO.txt = TODO.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A0BAA29-BDEC-4C89-94D9-D281E9A8D5AB}
 	EndGlobalSection
 EndGlobal

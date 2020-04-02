@@ -1,4 +1,28 @@
-﻿1.6.3, 2014-07-27
+﻿ChangeLog
+
+1.7.0
+    Adoption by Linuxgurugamer
+    Added support for ClickThroughBlocker
+    Added version file
+    Added AssemblyVersion.tt
+    Added InstallChecker
+    Added support for Toolbarcontroller, using old button-normal/button-highlight for the blizzy toolbar buttons
+    Replaced stock button with new image, normal and highlight now working
+    Moved all images into PluginData
+    Replaced all GetTexture calls with ToolbarControl.LoadImageFromFile to avoid compression
+    Removed all the SENTAR specific code
+    Replaced all hard-coded planet specific code with code which gets the available planets from the game itself.
+    Added new achievement to number of launches (500)
+    Removed hard-coded techs, now gets list of techs from the game
+    Removed hard-coded altitude records, gets list from the game
+    Added toggle to only show earned achievements
+
+    Defined CFG file for user-defined achievements
+       	Surface Sample
+	    Orbit Achievement
+	    Landing
+
+1.6.3, 2014-07-27
 - In addition to the automatic update check, the plugin now also gets KSP versions
   from the update check server. In case the currently running KSP version is one of
   those versions, the plugin will not complain about being incompatible with this
