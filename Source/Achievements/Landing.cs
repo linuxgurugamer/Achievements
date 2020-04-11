@@ -93,6 +93,8 @@ namespace Achievements
                     "Land near the equator on Inaccessable.", "landing.inaccessable.equator").addon()
             });
 
+            var l = new BodyLanding(Body.KERBIN, false, true, -1, -1, new Location[] { Location.KERBIN_NORTH_POLE, Location.KERBIN_SOUTH_POLE },
+                    "I'm Freezing Out Here", "Land on the north or south pole of Kerbin.", "landing.kerbin.pole");
             return achievements;
         }
 
@@ -104,11 +106,16 @@ namespace Achievements
 
     internal class Landing : AchievementBase
     {
-        private bool stableOrbit;
-        private double minAltitude;
-        private bool flyingStep;
-        private bool stableOrbitStep;
-        private bool minAltitudeStep;
+        /* private*/
+        internal bool stableOrbit;
+        /* private*/
+        internal double minAltitude;
+        /* private*/
+        internal bool flyingStep;
+        /* private*/
+        internal bool stableOrbitStep;
+        /* private*/
+        internal bool minAltitudeStep;
 
         internal Landing(bool stableOrbit, double minAltitude)
         {
@@ -170,20 +177,25 @@ namespace Achievements
 
     internal class BodyLanding : Landing
     {
-        private Body body;
-        private bool splash;
-        private double maxDegreesLatitudeFromEquator;
-        private IEnumerable<Location> locations;
-        private string title;
-        private string text;
-        private string key;
+        /* private*/
+        internal Body body;
+        /* private*/
+        internal bool splash;
+        /* private*/
+        internal double maxDegreesLatitudeFromEquator;
+        /* private*/ internal  IEnumerable<Location> locations;
+        /* private*/
+        internal string title;
+        /* private*/
+        internal string text;
+        /* private*/
+        internal string key;
 
         internal BodyLanding(Body body, bool splash, string title)
             : this(body, splash, false, -1, -1, new Location[0], title,
                 splash ? "Splash into an ocean on the surface of " + body.theName + "." : "Land on the surface of " + body.theName + ".",
                 splash ? "landing.splash." + body.name : "landing." + body.name)
         {
-
             this.body = body;
             this.splash = splash;
             this.title = title;
@@ -207,6 +219,7 @@ namespace Achievements
         {
             return base.check(vessel) &&
                 vessel.getCurrentBody().Equals(body) &&
+                //vessel.getCurrentBody().name == body.name &&
                 (splash ? vessel.isSplashed() : vessel.isLanded()) &&
                 ((maxDegreesLatitudeFromEquator < 0) || (Math.Abs(vessel.latitude) <= maxDegreesLatitudeFromEquator)) &&
                 isAtLocation(vessel);
@@ -349,7 +362,7 @@ namespace Achievements
                     enginesStep = vessel.getEnginesCount() > 0;
                 }
 
-                return base.check(vessel) && enginesStep && (vessel.getEnginesCount() == 0) && !vessel.getCurrentBody().Equals(Body.KERBIN);
+                return base.check(vessel) && enginesStep && (vessel.getEnginesCount() == 0) && !vessel.getCurrentBody().Equals(Body.KERBIN); // replace with homeworld
             }
             else
             {

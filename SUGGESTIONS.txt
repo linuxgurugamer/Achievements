@@ -39,7 +39,16 @@ Don't Move or I'll Chute - Land safely using only parachutes.
 
 -"I have no memory of this place" - land at KSC2
 -"Dejavu" - Walk into the hangar on the island airfield(where the old stock parts are)
+1 31' 43" S
+71 54' 13" W
 
+Upper left
+1 31' 33" S
+71 54' 05" W
+
+Lower right
+1 31'52" S
+71 54' 23" W
 -------------------------------------------------------------------------------------------------------
 
 "We need a kick" - have a fly-by trajectory of any body with atmosphere right above the atmosphere with no fuel left. (Supposing somebody failed aerobraking)

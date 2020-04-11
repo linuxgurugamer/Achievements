@@ -26,12 +26,13 @@ using UnityEngine;
 
 namespace Achievements
 {
-
+    [KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.EDITOR, GameScenes.FLIGHT, GameScenes.SPACECENTER, GameScenes.TRACKSTATION)]
     internal class EarnedAchievements : ScenarioModule
     {
         private static List<Type> achievementFactoryTypes;
 
-        internal static EarnedAchievements instance
+        internal static EarnedAchievements instance;
+#if false
         {
             get
             {
@@ -48,13 +49,28 @@ namespace Achievements
                 }
             }
         }
+#endif
+
+        public override void OnAwake()
+        {
+            //installScenario();
+            instance = this;
+        }
+
         internal Dictionary<Category, IEnumerable<Achievement>> achievements
         {
             get;
             private set;
         }
 
-        private List<Achievement> achievementsList_;
+#if false
+        static private List<Achievement> achievementsList_ = null;
+        static internal int achievementsListCnt = 0;
+#else
+         private List<Achievement> achievementsList_ = null;
+         internal int achievementsListCnt = 0;
+
+#endif
         internal List<Achievement> achievementsList
         {
             get
@@ -73,23 +89,6 @@ namespace Achievements
             private set;
         }
 
-        private static void installScenario()
-        {
-            Game game = HighLogic.CurrentGame;
-            if ((game != null) && !game.scenarios.Any(s => s.moduleName == typeof(EarnedAchievements).Name))
-            {
-                // add scenario to game
-                ProtoScenarioModule scenario = game.AddProtoScenarioModule(typeof(EarnedAchievements),
-                    GameScenes.EDITOR, GameScenes.FLIGHT, GameScenes.SPACECENTER, GameScenes.TRACKSTATION);
-
-                // load scenario instantly
-                if (scenario.targetScenes.Contains(HighLogic.LoadedScene))
-                {
-                    scenario.Load(ScenarioRunner.Instance);
-                }
-            }
-        }
-
         // Since bodies are now generated from the database rather than being hardcoded,
         // the following was added to wait until all the bodies had been initialized
         // This is necessary since the hard-coded version didn't need to wait becuase they
@@ -100,26 +99,22 @@ namespace Achievements
         }
         IEnumerator WaitForBody(ConfigNode node)
         {
-            WaitForSeconds wfs = new WaitForSeconds(0.1f);
+            WaitForSeconds wfs = new WaitForSeconds(0.2f);
             while (!Body.initted)
                 yield return wfs;
             achievements = createAchievements();
 
             if (node.HasNode("achievements"))
             {
-                Log.info("achievements node found");
                 node = node.GetNode("achievements");
             }
-            else
-            {
-                string settingsFile = KSPUtil.ApplicationRootPath + "GameData/Achievements/achievements.dat";
-                if (System.IO.File.Exists(settingsFile))
-                {
-                    Debug.Log("converting earned achievements from global to current save");
-                }
-                node = ConfigNode.Load(settingsFile) ?? new ConfigNode();
-            }
+
+            AchievementLoad al = new AchievementLoad();
+            al.LoadCfgAchievements();
+
             earnedAchievements = loadEarnedAchievements(node);
+
+            //var b = achievementsList;
             yield return null;
         }
 
@@ -146,32 +141,7 @@ namespace Achievements
 
         private Dictionary<Achievement, AchievementEarn> loadEarnedAchievements(ConfigNode node)
         {
-            Log.info("loadEarnedAchievements");
             Dictionary<Achievement, AchievementEarn> result = new Dictionary<Achievement, AchievementEarn>();
-
-            // old way of doing things
-            List<ConfigNode> legacyNodes = new List<ConfigNode>();
-            foreach (ConfigNode.Value value in node.values)
-            {
-                string key = value.name;
-
-                // legacy
-                if (key == "launch")
-                {
-                    key = "launch.1";
-                }
-
-                string time = value.value;
-                ConfigNode legacyNode = new ConfigNode(key);
-                legacyNode.AddValue("time", time);
-                legacyNode.AddValue("flight", Achievements.UNKNOWN_VESSEL);
-                legacyNodes.Add(legacyNode);
-            }
-            foreach (ConfigNode legacyNode in legacyNodes)
-            {
-                node.RemoveValue(legacyNode.name);
-                node.AddNode(legacyNode);
-            }
 
             // new way
             foreach (Achievement achievement in achievementsList)
@@ -192,13 +162,11 @@ namespace Achievements
                 }
             }
 
-            Debug.Log("loaded " + result.Count() + " earned achievements");
             return result;
         }
 
         private void saveEarnedAchievements(ConfigNode node)
         {
-            Debug.Log("saving achievements (" + earnedAchievements.Count() + " earned)");
             foreach (Achievement achievement in achievementsList)
             {
                 ConfigNode achievementNode = node.AddNode(achievement.getKey());
@@ -228,7 +196,6 @@ namespace Achievements
                     achList.AddRange(categoryAchievements);
                 }
             }
-            Log.info("getAchievementsList, achievements loaded: " + achList.Count());
             return achList;
         }
 
@@ -262,14 +229,13 @@ namespace Achievements
                     }
                     IEnumerable<Achievement> factoryAchievements = factory.getAchievements();
                     categoryAchievements.AddRange(factoryAchievements);
-                    Log.info("EarnedAchievements.createAchievements completed");
                 }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
                 }
             }
-            Debug.Log("number of achievements: " + achievements.getValuesCount() + " in " + achievements.Keys.Count() + " categories");
+
             allAchievementsCreated = true;
             return achievements;
         }

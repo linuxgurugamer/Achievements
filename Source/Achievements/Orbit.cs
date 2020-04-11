@@ -55,13 +55,18 @@ namespace Achievements
 
     internal class SpecifiedOrbitAchievement : AchievementBase
     {
+        string title;
+        string text;
+        IEnumerable<Body> bodies;
         double minAltitude;
         double maxAltitude;
         double minEccentricity;
         double maxEccentricity;
         double minInclination;
         double maxInclination;
-        internal SpecifiedOrbitAchievement(
+        internal SpecifiedOrbitAchievement(IEnumerable<Body> bodies,
+            string title,
+            string text,            
             double minAltitude = -1,
             double maxAltitude = -1,
             double minEccentricity = 0,
@@ -69,6 +74,9 @@ namespace Achievements
             double minInclination = 0,
             double maxInclination = 90)
         {
+            this.title = title;
+            this.text = text;
+            this.bodies = bodies;
             this.minAltitude = minAltitude;
             this.maxAltitude = maxAltitude;
             this.minEccentricity = minEccentricity;
@@ -80,26 +88,33 @@ namespace Achievements
         {
             if (vessel != null && vessel.isInStableOrbit())
             {
-                Orbit orbit = vessel.orbit;
-                if (orbit.altitude >= minAltitude &&
-                    orbit.altitude <= maxAltitude &&
-                    orbit.eccentricity >= minEccentricity &&
-                    orbit.eccentricity <= maxEccentricity &&
-                    orbit.inclination >= minInclination &&
-                    orbit.inclination <= maxInclination)
-                    return true;
+                foreach (Body body in bodies)
+                {
+                    if (vessel.getCurrentBody().Equals(body))
+                    {
+                        Orbit orbit = vessel.orbit;
+                        if (orbit.altitude >= minAltitude &&
+                            orbit.altitude <= maxAltitude &&
+                            orbit.eccentricity >= minEccentricity &&
+                            orbit.eccentricity <= maxEccentricity &&
+                            orbit.inclination >= minInclination &&
+                            orbit.inclination <= maxInclination)
+                            return true;
+                        break;
+                    }
+                }
             }
             return false;
         }
 
         public override string getTitle()
         {
-            return "Going Around and Around";
+            return title;
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit around a celestial body.";
+            return text;
         }
 
         public override string getKey()
@@ -310,7 +325,7 @@ namespace Achievements
                     numParts = getNumParts(vessel);
                 }
 
-                return base.check(vessel) && preLaunchStep && (getNumParts(vessel) == numParts) && vessel.getCurrentBody().Equals(Body.KERBIN);
+                return base.check(vessel) && preLaunchStep && (getNumParts(vessel) == numParts) && vessel.getCurrentBody().Equals(Body.KERBIN); // replace with homeworld
             }
             else
             {

@@ -47,7 +47,9 @@ ACHIEVEMENTS
 		key = keyname
 		title =
 		text =
-		bodies =
+
+		bodies = ALL_BODIES
+		bodyRequirement = any|all|individual // defaults to any, individual makes a seperate achievement for each body
 	}
 	ORBITACHIEVEMENT
 	{
@@ -55,6 +57,9 @@ ACHIEVEMENTS
 		title =
 		text = 
 		bodies =
+		
+		bodyRequirement = any|all|individual // defaults to any, individual makes a seperate achievement for each body
+
 		minAltitude =
 		maxAltitude =
 		minInclination = 0;
@@ -67,7 +72,6 @@ ACHIEVEMENTS
 	LOCATION
 	{
 		name =
-		body =
 		// Following defines a rectangle if the second pair is set
 		latitude =
 		longitude =
@@ -84,13 +88,13 @@ ACHIEVEMENTS
 		key = 
 		title =
 		text =
-		bodies =
+		bodies = // ignored if locations are specified
 		// following are all optional
 		splash = true
 		stableOrbit = false (if true, minAltitude MUST be set)
 		minAltitude =
 		maxDegreesLatitudeFromEquator =
-		locations = location1 location2
+		locations = location1 location2  // all locations are assumed to be on the same planet
 	}
 }
 

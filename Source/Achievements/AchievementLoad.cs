@@ -64,10 +64,14 @@ namespace Achievements
 
 #endif
 
+#if false
     [KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
     public class AchievementLoad : MonoBehaviour
+#else
+    public class AchievementLoad
+#endif
     {
-        const string CONFIG = "GameData/Achievements/PluginData/achievements.cfg";
+        //const string CONFIG = "GameData/Achievements/PluginData/achievements.cfg";
 
         public class Bodies
         {
@@ -100,9 +104,9 @@ namespace Achievements
         }
         internal Dictionary<string, Bodies> AllBodies = new Dictionary<string, Bodies>();
 
+
         List<string> GetAllbodies(string bname)
         {
-            Log.info("allBodies, bname: " + bname);
             var ab = new List<string>();
             foreach (var b1 in bname.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -112,22 +116,26 @@ namespace Achievements
                     string s = "";
                     foreach (var s1 in body.bodies)
                         s += s1 + " ";
-                    Log.info("AllBodies.ContainsKey, s: " + s);
                     var slist = GetAllbodies(s);
                     ab.AddRange(slist);
                 }
                 else
+                {
                     ab.Add(bname);
+                }
             }
 
             return ab;
         }
+
         public class SurfaceSample
         {
             public string key;
             public string title;
             public string text;
             public List<string> bodies = new List<string>();
+            public bool requireAll = false;
+            public bool individual = false;
             public HashSet<string> bodiesHash;
 
             public SurfaceSample(string key, string title, string text)
@@ -146,8 +154,6 @@ namespace Achievements
 
         public bool AddBodiesTo(SurfaceSample ss, string bodies)
         {
-            Log.info("SurfaceSample AddBodiesTo, bodies: " + bodies);
-
             ss.bodies.AddRange(GetAllbodies(bodies));
             ss.bodiesHash = new HashSet<string>(ss.bodies);
             return ss.bodies.Count > 0;
@@ -162,6 +168,8 @@ namespace Achievements
             public string title;
             public string text;
             public List<string> bodies;
+            public bool requireAll = false;
+            public bool individual = false;
             public HashSet<string> bodiesHash;
             public double minAltitude = -1;
             public double maxAltitude = -1;
@@ -208,8 +216,8 @@ namespace Achievements
             public HashSet<string> bodiesHash;
             public double latitude;
             public double longitude;
-            public double latitude2 = -1;
-            public double longitude2 = -1;
+            public double latitude2 = 0;
+            public double longitude2 = 0;
             public double radius = -1;
 
             public CfgLocation(string name)
@@ -218,7 +226,10 @@ namespace Achievements
             }
             public override string ToString()
             {
-                return name + ", " + bodies.ToString() +
+                string s = "";
+                foreach (var b in bodies)
+                    s += b + ", ";
+                return name + ", " + s+
                     ", latitude: " + latitude +
                     ", longitude: " + longitude +
                     ", latitude2: " + latitude2 +
@@ -244,12 +255,13 @@ namespace Achievements
             public string text;
             public List<string> bodies;
             public HashSet<string> bodiesHash;
-
+            public bool requireAll = false;
+            public bool individual = false;
             public bool splash = false;
             public bool stableOrbit = false;
             public double minAltitude = -1;
             public double maxDegreesLatitudeFromEquator = -1;
-            public List<CfgLocation> locations;
+            public List<CfgLocation> locations = new List<CfgLocation>();
 
             public Landing(string key, string title, string text)
             {
@@ -313,9 +325,13 @@ namespace Achievements
             AllBodies.Add(Body.POL.name, new Bodies(Body.POL.name, Body.POL.name));
         }
 
-        void Start()
+        internal void  Start()
         {
+#if false
             StartCoroutine(WaitForBody());
+#else
+            LoadCfgAchievements();
+#endif
         }
 
         private IEnumerable<Body> flatten(List<string> bodies)
@@ -323,26 +339,69 @@ namespace Achievements
             List<Body> result = new List<Body>();
             foreach (var bs in bodies)
             {
-                var body = Body.allBodiesDict[bs];
-                result.Add(body);
+                if (Body.allBodiesDict.ContainsKey(bs))
+                {
+                    var body = Body.allBodiesDict[bs];
+                    result.Add(body);
+                }
+                else
+                {
+                    bool b = false;
+                    switch (bs)
+                    {
+                        case "STOCK_ALL":
+                            b = true; result.AddRange(Body.STOCK_ALL);
+                            break;
+                        case "STOCK_LANDABLE":
+                            b = true; result.AddRange(Body.STOCK_LANDABLE);
+                            break;
+                        case "ALL_PLANETS":
+                            b = true; result.AddRange(Body.ALL_PLANETS);
+                            break;
+                        case "ALL_PLANETS_WITHOUT_HOMEWORLD":
+                            b = true; result.AddRange(Body.ALL_PLANETS_WITHOUT_HOMEWORLD);
+                            break;
+                        case "ALL_MOONS":
+                            b = true; result.AddRange(Body.ALL_MOONS);
+                            break;
+                        case "ALL_LANDABLE":
+                            b = true; result.AddRange(Body.ALL_LANDABLE);
+                            break;
+                        case "ALL_NONLANDABLE":
+                            b = true; result.AddRange(Body.ALL_NONLANDABLE);
+                            break;
+                        case "ALL_SPLASHABLE":
+                            b = true; result.AddRange(Body.ALL_SPLASHABLE);
+                            break;
+                        case "ALL_WITH_ATMOSPHERE":
+                            b = true; result.AddRange(Body.ALL_WITH_ATMOSPHERE);
+                            break;
+                    }
+                    if (!b)
+                        Log.info("flatten.  Missing body: " + bs);
+                    else
+                        Log.info("flatten: Adding new body range to result: " + bs);
+
+                }
             }
             return result;
         }
-  
+
         private List<Location> CfgLocationsToLocations(List<CfgLocation> cfgList)
         {
             var locations = new List<Location>();
+
             foreach (var cfg in cfgList)
             {
                 foreach (var b in cfg.bodies)
                 {
-                    if (cfg.radius == -1)
+                    if (cfg.radius < 0)
                     {
                         locations.Add(new Location(Body.allBodiesDict[b], cfg.latitude, cfg.longitude, cfg.latitude2, cfg.longitude2));
                     }
                     else
                     {
-                        locations.Add( new Location(Body.allBodiesDict[b], cfg.latitude, cfg.longitude, cfg.radius));
+                        locations.Add(new Location(Body.allBodiesDict[b], cfg.latitude, cfg.longitude, cfg.radius));
                     }
                 }
             }
@@ -350,15 +409,15 @@ namespace Achievements
             return locations;
         }
 
-
-        IEnumerator WaitForBody()
-        {
-            WaitForSeconds wfs = new WaitForSeconds(0.25f);
-            while (!Body.initted || EarnedAchievements.instance == null || !EarnedAchievements.instance.allAchievementsCreated)
-                yield return wfs;
-            Log.info("AchievementLoad.WaitForBody, bodyInitted");
+        internal void LoadCfgAchievements()
+        { 
             AddPredefined();
             var achievements = GameDatabase.Instance.GetConfigNodes("ACHIEVEMENTS");
+
+            //List<Achievement> loadedAchievements = new List<Achievement>();
+            List<Achievement> loadedSurfaceSampleAchievements = new List<Achievement>();
+            List<Achievement> loadedOrbitAchievements = new List<Achievement>();
+            List<Achievement> loadedLandingAchievements = new List<Achievement>();
 
             foreach (var achievementGroup in achievements)
             {
@@ -368,23 +427,47 @@ namespace Achievements
                 GetAllLocations(achievementGroup);
                 GetAllLandings(achievementGroup);
 
-                List<Achievement> loadedAchievements = new List<Achievement>();
 
-#if DEBUG
+#if false
                 Log.info("Allbodies dump=================================================");
                 foreach (var b in AllBodies)
                     Log.info(b.ToString());
+
                 Log.info("allSurfaceSamples dump=================================================");
                 foreach (var a in allSurfaceSamples)
                 {
                     var ass = a.Value;
                     Log.info(a.ToString());
-                    var f = flatten(ass.bodies);
-                    loadedAchievements.Add(
-                        new AllBodiesSurfaceSample(f,
-                                                    ass.title,
-                                                    ass.text,
-                                                    ass.key).addon());
+                    if (ass.individual)
+                    {
+                        foreach (var f in ass.bodies)
+                        {
+                            if (Body.allBodiesDict.ContainsKey(f))
+                            {
+                                var body = Body.allBodiesDict[f];
+                                List<Body> l = new List<Body>();
+                                l.Add(body);
+                                loadedSurfaceSampleAchievements.Add(
+                                   new AllBodiesSurfaceSample(l,
+                                                               ass.title,
+                                                               ass.text,
+                                                               ass.key).addon());
+                            }
+                        }
+                    }
+                    if (ass.requireAll)
+                    {
+
+                    }
+                    if (!ass.individual && !ass.requireAll)
+                    {
+                        var f = flatten(ass.bodies);
+                        loadedSurfaceSampleAchievements.Add(
+                            new AllBodiesSurfaceSample(f,
+                                                        ass.title,
+                                                        ass.text,
+                                                        ass.key).addon());
+                    }
                 }
 
 
@@ -395,15 +478,51 @@ namespace Achievements
                     Log.info(a.ToString());
 
                     var aoa = a.Value;
-                    loadedAchievements.Add(
-                        new
-                     SpecifiedOrbitAchievement(
-                        aoa.minAltitude,
-                        aoa.maxAltitude,
-                        aoa.minEccentricity,
-                        aoa.maxEccentricity,
-                        aoa.minInclination,
-                        aoa.maxInclination));
+                    if (aoa.individual)
+                    {
+                        foreach (var f in aoa.bodies)
+                        {
+                            if (Body.allBodiesDict.ContainsKey(f))
+                            {
+                                var body = Body.allBodiesDict[f];
+                                List<Body> l = new List<Body>();
+                                l.Add(body);
+                                Log.info("Adding existing body to allOrbitAchievements: " + body.name);
+                                loadedOrbitAchievements.Add(
+                                 new
+                              SpecifiedOrbitAchievement(
+                                     l,
+                                     aoa.title,
+                                     aoa.text,
+                                     aoa.minAltitude,
+                                     aoa.maxAltitude,
+                                     aoa.minEccentricity,
+                                     aoa.maxEccentricity,
+                                     aoa.minInclination,
+                                     aoa.maxInclination));
+                            }
+                        }
+                    }
+                    if (aoa.requireAll)
+                    {
+
+                    }
+                    if (!aoa.individual && !aoa.requireAll)
+                    {
+                        var f = flatten(aoa.bodies);
+                        loadedOrbitAchievements.Add(
+                             new
+                          SpecifiedOrbitAchievement(
+                                 f,
+                                 aoa.title,
+                                 aoa.text,
+                                 aoa.minAltitude,
+                                 aoa.maxAltitude,
+                                 aoa.minEccentricity,
+                                 aoa.maxEccentricity,
+                                 aoa.minInclination,
+                                 aoa.maxInclination));
+                    }
                 }
                 Log.info("allLocations dump=================================================");
                 foreach (var l in allLocations)
@@ -413,46 +532,66 @@ namespace Achievements
                 Log.info("allLandings dump=================================================");
                 foreach (var l in allLandings)
                 {
-                    Log.info(l.ToString());
+                    Log.info(l.Value.ToString());
                     var al = l.Value;
+                    foreach (CfgLocation ll in al.locations)
+                        Log.info("BodyLanding.location: " + ll.ToString());
 
-                    // 		internal Location(Body body, double latitude, double longitude, double radius) {
-#if false
-                        internal BodyLanding(Body body, bool splash, string title)
-
-            : this(body, splash, false, -1, -1, new Location[0], title,
-                splash ? "Splash into an ocean on the surface of " + body.theName + "." : "Land on the surface of " + body.theName + ".",
-                splash ? "landing.splash." + body.name : "landing." + body.name)
-
-
-        internal BodyLanding(Body body, bool splash, bool stableOrbit, double minAltitude, double maxDegreesLatitudeFromEquator,
-            IEnumerable<Location> locations, string title, string text, string key)
-
-            : base(stableOrbit, minAltitude)
-
-#endif
                     if (al.locations.Count > 0)
                     {
-                        foreach (var loc in al.locations)
-                        {
-                            foreach (var b in al.bodies)
-                            {
-                                loadedAchievements.Add(new BodyLanding(Body.allBodiesDict[b], al.splash, al.stableOrbit, al.minAltitude, al.maxDegreesLatitudeFromEquator,
-                                     CfgLocationsToLocations(al.locations), al.title, al.text, al.key));
 
-                            }
-                        }
+                        loadedLandingAchievements.Add(new BodyLanding(Body.allBodiesDict[al.bodies.First()], al.splash, al.stableOrbit, al.minAltitude, al.maxDegreesLatitudeFromEquator,
+                             CfgLocationsToLocations(al.locations), al.title, al.text, al.key));
+
+
                     }
                     else
                     {
                         foreach (var b in al.bodies)
-                            loadedAchievements.Add(new BodyLanding(Body.allBodiesDict[b], al.splash, al.title));
+                        {
+                            //loadedLandingAchievements.Add(new BodyLanding(Body.allBodiesDict[b], al.splash, al.title));
+
+                            loadedLandingAchievements.Add(new BodyLanding(Body.allBodiesDict[b], al.splash,
+                                al.stableOrbit, al.minAltitude, al.maxDegreesLatitudeFromEquator,
+                                new Location[0], al.title, al.text, al.key));
+
+                        }
+
+#if false
+                          internal BodyLanding(Body body, bool splash, string title)
+            : this(body, splash, false, -1, -1, new Location[0], title,
+                splash ? "Splash into an ocean on the surface of " + body.theName + "." : "Land on the surface of " + body.theName + ".",
+                splash ? "landing.splash." + body.name : "landing." + body.name)
+        {
+            Log.info("BodyLanding, body: " + body.name + ", splash: " + splash +  title + ", text: " + text);
+
+            this.body = body;
+            this.splash = splash;
+            this.title = title;
+        }
+#endif
 
                     }
                 }
                 Log.info("End dump=================================================");
 #endif
-            }
+                    }
+            Log.info("Total new body achievements loaded from cfg: " + loadedSurfaceSampleAchievements.Count());
+            Log.info("Total new orbit achievements loaded from cfg: " + loadedOrbitAchievements.Count());
+            Log.info("Total new landing achievements loaded from cfg: " + loadedLandingAchievements.Count());
+
+            var achievementList = (List<Achievement>)EarnedAchievements.instance.achievements[Category.RESEARCH_AND_DEVELOPMENT];
+            achievementList.AddRange(loadedSurfaceSampleAchievements);
+
+            achievementList = (List<Achievement>)EarnedAchievements.instance.achievements[Category.SPACEFLIGHT];
+            achievementList.AddRange(loadedOrbitAchievements);
+
+            achievementList = (List<Achievement>)EarnedAchievements.instance.achievements[Category.LANDING];
+            achievementList.AddRange(loadedLandingAchievements);
+
+            EarnedAchievements.instance.achievementsList.AddRange(loadedSurfaceSampleAchievements);
+            EarnedAchievements.instance.achievementsList.AddRange(loadedOrbitAchievements);
+            EarnedAchievements.instance.achievementsList.AddRange(loadedLandingAchievements);
         }
 
 
@@ -471,21 +610,31 @@ namespace Achievements
                     Landing ss = new Landing(key, title, text);
                     if (AddBodiesTo(ss, bodies))
                     {
-                        string b = "false";
+                        string b = "any";
+                        node.TryGetValue("bodyRequirement", ref b);
+                        if (b != "")
+                        {
+                            ss.requireAll = (b.ToLower() == "all");
+                            ss.individual = (b.ToLower() == "individual");
+                        }
+                        b = "false";
                         node.TryGetValue("splash", ref b);
-                        bool.TryParse(b, out ss.splash);
+                        if (b != "")
+                            bool.TryParse(b, out ss.splash);
 
                         b = "false";
                         node.TryGetValue("stableOrbit", ref b);
-                        bool.TryParse(b, out ss.stableOrbit);
-
+                        if (b != "")
+                            bool.TryParse(b, out ss.stableOrbit);
                         b = "-1";
                         node.TryGetValue("minAltitude", ref b);
-                        double.TryParse(b, out ss.minAltitude);
+                        if (b != "")
+                            double.TryParse(b, out ss.minAltitude);
 
                         b = "-1";
                         node.TryGetValue("maxDegreesLatitudeFromEquator", ref b);
-                        double.TryParse(b, out ss.maxDegreesLatitudeFromEquator);
+                        if (b != "")
+                            double.TryParse(b, out ss.maxDegreesLatitudeFromEquator);
 
                         string locations = "";
                         if (node.TryGetValue("locations", ref locations))
@@ -494,11 +643,15 @@ namespace Achievements
                             foreach (var l in list)
                             {
                                 if (allLocations.ContainsKey(l))
+                                {
                                     ss.locations.Add(allLocations[l]);
+                                }
+                                else
+                                    Log.error("Missing location: " + l);
                             }
                         }
-
-                        allLandings.Add(key, ss);
+                            allLandings.Add(key, ss);
+                        
                     }
                 }
             }
@@ -560,34 +713,40 @@ namespace Achievements
             foreach (var node in achievements.GetNodes("LOCATION"))
             {
                 string name = "", bodies = "";
-                if (node.TryGetValue("name", ref name) &&
+                if (node.TryGetValue("body", ref bodies) ||
                     node.TryGetValue("bodies", ref bodies))
-                {
-                    CfgLocation location = new CfgLocation(name);
-                    if (AddBodiesTo(location, bodies))
+                { 
+                    if (node.TryGetValue("name", ref name))
                     {
-                        string lat = "", lon = "";
+                        CfgLocation location = new CfgLocation(name);
+                        if (AddBodiesTo(location, bodies))
+                        {
+                            string lat = "", lon = "";
 
-                        if (node.TryGetValue("latitude", ref lat) &&
-                            node.TryGetValue("longitude", ref lon))
-                        {
-                            location.latitude = Latitude(lat);
-                            location.longitude = Longitude(lon);
-                        }
-                        if (node.TryGetValue("latitude2", ref lat) &&
-                            node.TryGetValue("longitude2", ref lon))
-                        {
-                            location.latitude2 = Latitude(lat);
-                            location.longitude2 = Longitude(lon);
-                        }
-                        string radius = "";
-                        if (node.TryGetValue("radius", ref radius))
-                        {
-                            double.TryParse(radius.Trim(), out location.radius);
-                        }
+                            if (node.TryGetValue("latitude", ref lat) &&
+                                node.TryGetValue("longitude", ref lon))
+                            {
+                                location.latitude = Latitude(lat);
+                                location.longitude = Longitude(lon);
+                            }
+                            if (node.TryGetValue("latitude2", ref lat) &&
+                                node.TryGetValue("longitude2", ref lon))
+                            {
+                                location.latitude2 = Latitude(lat);
+                                location.longitude2 = Longitude(lon);
+                            }
+                            string radius = "";
+                            if (node.TryGetValue("radius", ref radius))
+                            {
+                                double.TryParse(radius.Trim(), out location.radius);
+                            }
 
-                        allLocations.Add(name, location);
+                            allLocations.Add(name, location);
+                        }
+                        else
+                            Log.error("No valid locations found for LANDING");
                     }
+                
                 }
             }
         }
@@ -607,6 +766,13 @@ namespace Achievements
 
                     if (AddBodiesTo(ss, bodies))
                     {
+                        string b = "any";
+                        node.TryGetValue("bodyRequirement", ref b);
+                        if (b != "")
+                        {
+                            ss.requireAll = (b.ToLower() == "all");
+                            ss.individual = (b.ToLower() == "individual");
+                        }
                         if (node.HasValue("minAltitude"))
                         {
                             double.TryParse(node.GetValue("minAltitude"), out ss.minAltitude);
@@ -616,7 +782,7 @@ namespace Achievements
                         if (node.HasValue("maxAltitude"))
                         {
                             double.TryParse(node.GetValue("maxAltitude"), out ss.maxAltitude);
-                            ss.maxAltitude = Math.Max(ss.maxAltitude, 0);
+                            ss.maxAltitude = Math.Max(ss.maxAltitude, -1);
                         }
 
                         if (node.HasValue("minEccentricity"))
@@ -654,7 +820,6 @@ namespace Achievements
 
         void GetAllSurfaceSamples(ConfigNode achievements)
         {
-            Log.info("GetAllSurfaceSamples, node count: " + achievements.GetNodes("SURFACESAMPLE").Length);
             foreach (var node in achievements.GetNodes("SURFACESAMPLE"))
             {
                 string key = "", title = "", text = "", bodies = "";
@@ -664,11 +829,18 @@ namespace Achievements
                     node.TryGetValue("text", ref text) &&
                     node.TryGetValue("bodies", ref bodies))
                 {
-                    Log.info("Surface sample: key: " + key);
                     SurfaceSample ss = new SurfaceSample(key, title, text);
                     if (AddBodiesTo(ss, bodies))
                     {
+                        string b = "any";
+                        node.TryGetValue("bodyRequirement", ref b);
+                        if (b != "")
+                        {
+                            ss.requireAll = (b.ToLower() == "all");
+                            ss.individual = (b.ToLower() == "individual");
+                        }
                         allSurfaceSamples.Add(key, ss);
+
                     }
                 }
             }

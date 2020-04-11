@@ -169,11 +169,28 @@ namespace Achievements
         {
             if (initted)
                 return;
+
             foreach (CelestialBody p in FlightGlobals.Bodies)
             {
-                Body b = new Body(p.name);
-                allBodies.Add(b);
-                allBodiesDict.Add(p.name, b);
+                Body b = null;
+                if (!allBodiesDict.ContainsKey(p.name))
+                {
+                    foreach (var sa in STOCK_ALL)
+                    {
+                        if (sa.name == p.name)
+                        {
+                            b = sa;
+                            break;
+                        }
+                    }
+                    if (b== null)
+                        b = new Body(p.name);
+                    allBodies.Add(b);
+                    allBodiesDict.Add(p.name, b);
+                } else
+                {
+                    b = allBodiesDict[p.name];
+                }
                 if (p.referenceBody == Planetarium.fetch.Sun)
                 {
                     allPlanets.Add(b);

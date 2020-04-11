@@ -117,6 +117,7 @@ namespace Achievements
                 if (!onSurfaceStep)
                 {
                     onSurfaceStep = !requireOnSurface || (vessel.isOnSurface() && currentBody.Equals(body));
+                    //onSurfaceStep = !requireOnSurface || (vessel.isOnSurface() && currentBody.name ==body.name);
                 }
 
                 return onSurfaceStep && currentBody.Equals(body) && vessel.altitude.between(minAltitude, maxAltitude);

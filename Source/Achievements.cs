@@ -24,7 +24,6 @@ using KSP.UI.Screens;
 using KSPAchievements;
 using ToolbarControl_NS;
 
-
 namespace Achievements
 {
     [KSPAddon(KSPAddon.Startup.MainMenu, true)]
@@ -34,12 +33,13 @@ namespace Achievements
         {
             ToolbarControl.RegisterMod(Achievements.MODID, Achievements.MODNAME);
         }
-       
+
     }
 
-    [KSPAddon(KSPAddon.Startup.EveryScene, false)]
+    [KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
     public class Achievements : MonoBehaviour
     {
+        static public Achievements fetch;
         internal const string UNKNOWN_VESSEL = "unknown";
         internal const long VERSION = 19;
 
@@ -52,33 +52,27 @@ namespace Achievements
         private Toast toast;
         private HashSet<Achievement> queuedEarnedAchievements = new HashSet<Achievement>();
         private AchievementsWindow achievementsWindow;
-        //private ApplicationLauncherButton AchButton;
-        ToolbarControl toolbarControl;
+        private static ToolbarControl toolbarControl;
 
-        //private AchievementGUI AchievementGUI;
         public Texture2D AchieveButton;
 #if LOCATION_PICKER
 		private LocationPicker locationPicker;
 #endif
-        //private IButton windowButton;
         private bool showGui = true;
 
-        protected void Start()
+        public void Start()
         {
-            //if (UpdateChecker == null)
-            //{
-            //    UpdateChecker = new UpdateChecker();
-            //}
-
             Log.debug("Achievements.Start");
+            fetch = this;
+
             achievementEarnedClip = GameDatabase.Instance.GetAudioClip("Achievements/achievement");
             achievementEarnedAudioSource = gameObject.AddComponent<AudioSource>();
+
             achievementEarnedAudioSource.clip = achievementEarnedClip;
             achievementEarnedAudioSource.panStereo = 0;
             achievementEarnedAudioSource.playOnAwake = false;
             achievementEarnedAudioSource.loop = false;
             achievementEarnedAudioSource.Stop();
-
             //windowButton = ToolbarManager.Instance.add("achievements", "achievements");
             //windowButton.TexturePath = "Achievements/button-normal";
             //windowButton.ToolTip = "Achievements";
@@ -87,6 +81,7 @@ namespace Achievements
 
             GameEvents.onShowUI.Add(onShowUI);
             GameEvents.onHideUI.Add(onHideUI);
+            DontDestroyOnLoad(this);
         }
         public void Awake()
         {
@@ -104,24 +99,12 @@ namespace Achievements
         internal const string MODNAME = "Achievements";
         public void CreateButtons()
         {
-            if (HighLogic.LoadedScene == GameScenes.SPACECENTER && this.toolbarControl == null)
+            if (toolbarControl == null)
             {
-#if false
-				this.AchButton = ApplicationLauncher.Instance.AddModApplication(
-                    this.AchieveButtonOn,
-                    this.AchievButtonOff,
-                    null,
-                    null,
-                    null,
-                    null,
-                    ApplicationLauncher.AppScenes.SPACECENTER,
-                    AchieveButton                 
-                    );
-#endif
-
                 toolbarControl = gameObject.AddComponent<ToolbarControl>();
+
                 toolbarControl.AddToAllToolbars(this.AchieveButtonOn, this.AchievButtonOff,
-                    ApplicationLauncher.AppScenes.SPACECENTER,
+                    ApplicationLauncher.AppScenes.SPACECENTER | ApplicationLauncher.AppScenes.FLIGHT,
                     MODID,
                     "achButton",
                     "Achievements/PluginData/Textures/button-normal-38",
@@ -138,19 +121,17 @@ namespace Achievements
             toolbarControl.SetTexture("Achievements/PluginData/Textures/button-highlight-38", "Achievements/PluginData/Textures/button-highlight-24");
         }
 
-        private void AchievButtonOff()
+        internal void AchievTextureOff()
+        {
+            toolbarControl.SetTexture("Achievements/PluginData/Textures/button-normal-38", "Achievements/PluginData/Textures/button-normal-24");
+        }
+        internal void AchievButtonOff()
         {
             toggleAchievementsWindow();
-            toolbarControl.SetTexture("Achievements/PluginData/Textures/button-normal-38", "Achievements/PluginData/Textures/button-normal-24");
+            AchievTextureOff();
         }
         public void DestroyButtons()
         {
-#if false
-			if (this.AchButton != null)
-            {
-                ApplicationLauncher.Instance.RemoveModApplication(this.AchButton);
-            }
-#endif
             if (toolbarControl != null)
             {
                 toolbarControl.OnDestroy();
@@ -187,7 +168,7 @@ namespace Achievements
 
         private void updateAchievements()
         {
-            if (EarnedAchievements.instance != null )
+            if (EarnedAchievements.instance != null)
             {
                 foreach (Achievement achievement in EarnedAchievements.instance.achievementsList)
                 {
@@ -205,22 +186,24 @@ namespace Achievements
 
         private void checkAchievements()
         {
-            long now = DateTime.UtcNow.Ticks / 10000;
-            if ((now - lastCheck) >= CHECK_INTERVAL)
+            long now = DateTime.UtcNow.Ticks / 10000; // 1 millisecond
+            if ((now - lastCheck) >= CHECK_INTERVAL) // this delays it to every 1.5 seconds
             {
-                if (EarnedAchievements.instance != null)
+                Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
+                if (vessel != null && EarnedAchievements.instance != null)
                 {
                     foreach (Achievement achievement in EarnedAchievements.instance.achievementsList)
                     {
-                        if (!EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
+                        if (EarnedAchievements.instance.earnedAchievements == null || !EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
                         {
-                            Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
+                            //Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
+                            //if (vessel != null)
+                            //{
                             try
                             {
                                 if (achievement.check(vessel))
                                 {
                                     string key = achievement.getKey();
-                                    Debug.Log("achievement earned: " + key);
                                     AchievementEarn earn = new AchievementEarn(now, (vessel != null) ? vessel.vesselName : Achievements.UNKNOWN_VESSEL);
                                     EarnedAchievements.instance.earnedAchievements.Add(achievement, earn);
 
@@ -228,25 +211,27 @@ namespace Achievements
                                     queuedEarnedAchievements.Add(achievement);
                                 }
                             }
+
                             catch (Exception e)
                             {
                                 Debug.LogException(e);
                             }
                         }
                     }
+                }
 
-                    //long done = DateTime.UtcNow.Ticks / 10000;
-                    //Debug.LogWarning("checking achievements took " + (done - now) + " ms");
+                //long done = DateTime.UtcNow.Ticks / 10000;
+                //Debug.LogWarning("checking achievements took " + (done - now) + " ms");
 
-                    if ((queuedEarnedAchievements.Count() > 0) && (toast == null))
-                    {
-                        Achievement achievement = queuedEarnedAchievements.First<Achievement>();
-                        queuedEarnedAchievements.Remove(achievement);
+                if ((queuedEarnedAchievements.Count() > 0) && (toast == null))
+                {
+                    Achievement achievement = queuedEarnedAchievements.First<Achievement>();
+                    queuedEarnedAchievements.Remove(achievement);
 
-                        toast = new Toast(achievement, EarnedAchievements.instance.earnedAchievements[achievement]);
-                        playAchievementEarnedClip();
-                        awardReputation(achievement);
-                    }
+                    toast = new Toast(achievement, EarnedAchievements.instance.earnedAchievements[achievement]);
+                    playAchievementEarnedClip();
+                    awardReputation(achievement);
+
                 }
 
                 lastCheck = now;

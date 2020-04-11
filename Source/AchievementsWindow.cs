@@ -22,55 +22,60 @@ using System.Text;
 using UnityEngine;
 using ClickThroughFix;
 
-namespace Achievements {
-	internal class AchievementsWindow {
+namespace Achievements
+{
+    internal class AchievementsWindow
+    {
         private const string FORUM_THREAD_URL = "http://forum.kerbalspaceprogram.com/threads/101801-Achievements-1-7-0-Earn-145-achievements-while-playing-%28KSP-25%29-%2812-2-14%29";
 
-		internal Callback closeCallback;
+        internal Callback closeCallback;
 
-		private Dictionary<Category, IEnumerable<Achievement>> achievements;
-		private Dictionary<Achievement, AchievementEarn> earnedAchievements;
-		//private bool newVersionAvailable;
-		private int id = new System.Random().Next(int.MaxValue);
-		private Rect rect;
-		private Category selectedCategory;
-		private Vector2 achievementsScrollPos;
-		private Dictionary<Achievement, AchievementGUI> achievementGuis = new Dictionary<Achievement, AchievementGUI>();
-		private Achievement expandedAchievement;
-		private EditorLock editorLock = new EditorLock("Achievements_achievementsList");
+        private Dictionary<Category, IEnumerable<Achievement>> achievements;
+        private Dictionary<Achievement, AchievementEarn> earnedAchievements;
+        //private bool newVersionAvailable;
+        private int id = new System.Random().Next(int.MaxValue);
+        private Rect rect;
+        private Category selectedCategory;
+        private Vector2 achievementsScrollPos;
+        private Dictionary<Achievement, AchievementGUI> achievementGuis = new Dictionary<Achievement, AchievementGUI>();
+        private Achievement expandedAchievement;
+        private EditorLock editorLock = new EditorLock("Achievements_achievementsList");
 
-		internal AchievementsWindow(Dictionary<Category, IEnumerable<Achievement>> achievements,
-			Dictionary<Achievement, AchievementEarn> earnedAchievements /*, bool newVersionAvailable */) {
+        internal AchievementsWindow(Dictionary<Category, IEnumerable<Achievement>> achievements,
+            Dictionary<Achievement, AchievementEarn> earnedAchievements /*, bool newVersionAvailable */)
+        {
 
-			this.achievements = achievements;
-			this.earnedAchievements = earnedAchievements;
-			//this.newVersionAvailable = newVersionAvailable;
+            this.achievements = achievements;
+            this.earnedAchievements = earnedAchievements;
+            //this.newVersionAvailable = newVersionAvailable;
 
-			int width = AchievementGUI.TEX_WIDTH + 300;
-			int height = Screen.height / 2;
-			rect = new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height);
+            int width = AchievementGUI.TEX_WIDTH + 300;
+            int height = Screen.height / 2;
+            rect = new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height);
 
-			selectedCategory = achievements.Keys.OrderBy(c => c.title, StringComparer.CurrentCultureIgnoreCase).First();
-		}
+            selectedCategory = achievements.Keys.OrderBy(c => c.title, StringComparer.CurrentCultureIgnoreCase).First();
+        }
 
-		internal void draw() {
-			rect = ClickThruBlocker.GUILayoutWindow(id, rect, drawContents, "Achievements (earned " + earnedAchievements.Count() + " of " + achievements.getValuesCount() + ")");
+        internal void draw()
+        {
+            rect = ClickThruBlocker.GUILayoutWindow(id, rect, drawContents, "Achievements (earned " + earnedAchievements.Count() + " of " + achievements.getValuesCount() + ")");
 
-			editorLock.draw(rect.Contains(Utils.getMousePosition()));
-		}
+            editorLock.draw(rect.Contains(Utils.getMousePosition()));
+        }
 
-		private void drawContents(int id) {
-			GUILayout.BeginVertical();
+        private void drawContents(int id)
+        {
+            GUILayout.BeginVertical();
 
-			GUILayout.BeginHorizontal();
-			drawCategoriesList(achievements.Keys.OrderBy(c => c.title, StringComparer.CurrentCultureIgnoreCase));
-			GUILayout.Space(15);
-			drawAchievementsList(achievements[selectedCategory]);
-			GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            drawCategoriesList(achievements.Keys.OrderBy(c => c.title, StringComparer.CurrentCultureIgnoreCase));
+            GUILayout.Space(15);
+            drawAchievementsList(achievements[selectedCategory]);
+            GUILayout.EndHorizontal();
 
-			GUILayout.Space(20);
+            GUILayout.Space(20);
 
-			GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal();
 #if false
 			if (newVersionAvailable) {
 				Color oldColor = GUI.color;
@@ -83,108 +88,123 @@ namespace Achievements {
 				}
 			}
 #endif
-			GUILayout.FlexibleSpace();
+            GUILayout.FlexibleSpace();
 #if false
 			if (GUILayout.Button("Forums Feedback Thread")) {
 				Application.OpenURL(FORUM_THREAD_URL);
 			}
 #endif
-			//if (!newVersionAvailable) {
-				GUILayout.FlexibleSpace();
-			//}
-			GUILayout.EndHorizontal();
+            //if (!newVersionAvailable) {
+            GUILayout.FlexibleSpace();
+            //}
+            GUILayout.EndHorizontal();
 
-			GUILayout.EndVertical();
+            GUILayout.EndVertical();
 
-			if (GUI.Button(new Rect(rect.width - 18, 2, 16, 16), "")) {
-				close();
-			}
+            if (GUI.Button(new Rect(rect.width - 18, 2, 16, 16), ""))
+            {
+                close();
+            }
 
-			GUI.DragWindow();
-		}
+            GUI.DragWindow();
+        }
 
-		private void close() {
-			editorLock.draw(false);
+        private void close()
+        {
+            editorLock.draw(false);
 
-			if (closeCallback != null) {
-				closeCallback.Invoke();
-			}
-		}
-		bool showEarned = true;
-		private void drawCategoriesList(IEnumerable<Category> categories) {
-			GUILayout.BeginVertical(GUILayout.Width(220), GUILayout.ExpandWidth(true));
+            if (closeCallback != null)
+            {
+                closeCallback.Invoke();
+            }
+            Achievements.fetch.AchievTextureOff();
+        }
 
-			// adjust for texture drop shadow
-			GUILayout.Space(5);
+        bool showEarned = true;
+        private void drawCategoriesList(IEnumerable<Category> categories)
+        {
+            GUILayout.BeginVertical(GUILayout.Width(220), GUILayout.ExpandWidth(true));
 
-			foreach (Category category in categories) {
-				GUILayout.Space(5);
+            // adjust for texture drop shadow
+            GUILayout.Space(5);
 
-				GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
-				if (category.Equals(selectedCategory)) {
-					buttonStyle.fontStyle = FontStyle.Bold;
-				}
-				if (GUILayout.Button(category.title, buttonStyle)) {
-					selectedCategory = category;
-					achievementsScrollPos = Vector2.zero;
-				}
-			}
-			GUILayout.FlexibleSpace();
-			showEarned = GUILayout.Toggle(showEarned, "Show earned only");
-			GUILayout.EndVertical();
-		}
+            foreach (Category category in categories)
+            {
+                GUILayout.Space(5);
 
-		private void drawAchievementsList(IEnumerable<Achievement> achievements) {
-			achievementsScrollPos = GUILayout.BeginScrollView(achievementsScrollPos);
-			bool first = true;
-			foreach (Achievement achievement in achievements) {
-				if (first) {
-					first = false;
-				} else {
-					GUILayout.Space(5);
-				}
+                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
+                if (category.Equals(selectedCategory))
+                {
+                    buttonStyle.fontStyle = FontStyle.Bold;
+                }
+                if (GUILayout.Button(category.title, buttonStyle))
+                {
+                    selectedCategory = category;
+                    achievementsScrollPos = Vector2.zero;
+                }
+            }
+            GUILayout.FlexibleSpace();
+            showEarned = GUILayout.Toggle(showEarned, "Show earned only");
+            GUILayout.EndVertical();
+        }
 
-				AchievementEarn earn = earnedAchievements.ContainsKey(achievement) ? earnedAchievements[achievement] : null;
-				if (!showEarned || earn != null)
-				{
-					if ((earn != null) || !achievement.isHidden())
-					{
-						AchievementGUI gui = null;
-						if (achievementGuis.ContainsKey(achievement))
-						{
-							gui = achievementGuis[achievement];
-						}
-						else
-						{
-							gui = new AchievementGUI(achievement, earn);
-							gui.clickCallback = () =>
-							{
-								achievementClicked(achievement);
-							};
+        private void drawAchievementsList(IEnumerable<Achievement> achievements)
+        {
+            achievementsScrollPos = GUILayout.BeginScrollView(achievementsScrollPos);
+            bool first = true;
+            foreach (Achievement achievement in achievements)
+            {
+                AchievementEarn earn = earnedAchievements.ContainsKey(achievement) ? earnedAchievements[achievement] : null;
 
-							achievementGuis.Add(achievement, gui);
-						}
+                if (!showEarned || earn != null)
+                {
+                    if (first)
+                        first = false;
+                    else
+                        GUILayout.Space(5);
 
-						if (gui != null)
-						{
-							gui.draw(true, true, achievement == expandedAchievement);
-						}
-					}
-				}
-			}
-			GUILayout.EndScrollView();
-		}
+                    if ((earn != null) || !achievement.isHidden())
+                    {
+                        AchievementGUI gui = null;
+                        if (achievementGuis.ContainsKey(achievement))
+                        {
+                            gui = achievementGuis[achievement];
+                        }
+                        else
+                        {
+                            gui = new AchievementGUI(achievement, earn);
+                            gui.clickCallback = () =>
+                            {
+                                achievementClicked(achievement);
+                            };
 
-		internal void update() {
-			foreach (AchievementGUI gui in achievementGuis.Values) {
-				gui.update();
-			}
-		}
+                            achievementGuis.Add(achievement, gui);
+                        }
 
-		private void achievementClicked(Achievement achievement) {
-			if (earnedAchievements.ContainsKey(achievement)) {
-				expandedAchievement = achievement;
-			}
-		}
-	}
+                        if (gui != null)
+                        {
+                            gui.draw(true, true, achievement == expandedAchievement);
+                        }
+                    }
+                }
+            }
+            GUILayout.EndScrollView();
+        }
+
+        internal void update()
+        {
+            foreach (AchievementGUI gui in achievementGuis.Values)
+            {
+                gui.update();
+            }
+        }
+
+        private void achievementClicked(Achievement achievement)
+        {
+            if (earnedAchievements.ContainsKey(achievement))
+            {
+                expandedAchievement = achievement;
+            }
+        }
+    }
 }

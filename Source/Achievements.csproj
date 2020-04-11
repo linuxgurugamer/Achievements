@@ -88,7 +88,6 @@
     <Compile Include="InstallChecker.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PartExtensions.cs" />
-    <Compile Include="UpdateChecker.cs" />
     <Compile Include="VesselExtensions.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="LocationPicker.cs" />

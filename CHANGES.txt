@@ -22,6 +22,12 @@
 	    Orbit Achievement
 	    Landing
 
+    Added access to button in flight scene
+    Changed code from reloading on every scene to always being there, saves reinitializing every scene entry
+    Removed the installScenaro() method 
+    REmoved old code to convert old storage to new method
+    Removed updatechecker
+
 1.6.3, 2014-07-27
 - In addition to the automatic update check, the plugin now also gets KSP versions
   from the update check server. In case the currently running KSP version is one of
