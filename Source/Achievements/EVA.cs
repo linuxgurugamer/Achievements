@@ -28,11 +28,8 @@ namespace Achievements
         public IEnumerable<Achievement> getAchievements()
         {
             return new Achievement[] {
-                new AllBodiesEVA(Body.STOCK_LANDABLE, "Steps in the Sand", "Set foot on every planet and moon.", "landing.allBodiesEVA"),
-				//new AllBodiesEVA(Body.SENTAR_LANDABLE, "More Steps in the Sand", "Set foot on every planet and moon in the Sentar and Serious systems.",
-				//	"landing.allBodiesEVA.sentar").addon()
-				new AllBodiesEVA(Body.ALL_LANDABLE, "More Steps in the Sand", "Set foot on every planet and moon in the system(s).",
-                    "landing.allBodiesEVA.sentar").addon()
+                //new AllBodiesEVA(Body.STOCK_LANDABLE, "Steps in the Sand", "Set foot on every planet and moon.", "landing.allBodiesEVA"),
+                new AllBodiesEVA(Body.ALL_LANDABLE, "Steps in the Sand", "Set foot on every planet and moon.", "landing.allBodiesEVA")                
             };
         }
 
@@ -45,10 +42,13 @@ namespace Achievements
     internal class AllBodiesEVA : CountingAchievement
     {
         private IEnumerable<Body> bodies;
+        private IEnumerable<Location> locations;
         private string title;
         private string text;
         private string key;
+        private bool inSpace;
         private Dictionary<Body, bool> landedBodies = new Dictionary<Body, bool>();
+        private Dictionary<Location, bool> landedLocations = new Dictionary<Location, bool>();
 
         internal AllBodiesEVA(IEnumerable<Body> bodies, string title, string text, string key)
             : base(bodies.Count())
@@ -59,60 +59,140 @@ namespace Achievements
             this.key = key;
         }
 
+        internal AllBodiesEVA(IEnumerable<Location> locations, string title, string text, string key): base((locations.Count()))
+        {
+            this.locations = locations;
+            this.title = title;
+            this.text = text;
+            this.key = key;
+        }
+
         public override void init(ConfigNode node)
         {
-            foreach (Body body in bodies)
+            inSpace = false;
+            if (locations == null)
             {
-                bool landed = false;
-                if (node.HasValue(body.name))
+                foreach (Body body in bodies)
                 {
-                    landed = bool.Parse(node.GetValue(body.name));
+                    bool landed = false;
+                    if (node.HasValue(body.name))
+                    {
+                        landed = bool.Parse(node.GetValue(body.name));
+                    }
+                    if (!landedBodies.ContainsKey(body))
+                        landedBodies.Add(body, landed);
+                    else
+                    {
+                        landedBodies[body] = landed;
+                    }
+                    if (landed)
+                    {
+                        increaseCounter();
+                    }
                 }
-                if (!landedBodies.ContainsKey(body))
-                    landedBodies.Add(body, landed);
-                else
+            } else
+            {
+                foreach (Location loc in locations)
                 {
-                    landedBodies[body] = landed;
+                    bool landed = false;
+
+                    if (!landedLocations.ContainsKey(loc))
+                        landedLocations.Add(loc, landed);
+                    else
+                    {
+                        landedLocations[loc] = false;
+                    }
+                    if (landed)
+                    {
+                        increaseCounter();
+                    }
                 }
-                if (landed)
-                {
-                    increaseCounter();
-                }
+
             }
         }
 
         public override void save(ConfigNode node)
         {
-            foreach (Body body in landedBodies.Keys)
+            if (locations == null)
             {
-                if (landedBodies[body])
+                foreach (Body body in landedBodies.Keys)
                 {
-                    if (node.HasValue(body.name))
+                    if (landedBodies[body])
                     {
-                        node.RemoveValue(body.name);
+                        if (node.HasValue(body.name))
+                        {
+                            node.RemoveValue(body.name);
+                        }
+                        node.AddValue(body.name, landedBodies[body].ToString());
                     }
-                    node.AddValue(body.name, landedBodies[body].ToString());
                 }
+            } else
+            {
+                foreach (Location loc in landedLocations.Keys)
+                {
+                    if (landedLocations[loc])
+                    {
+                        if (node.HasValue(loc.ToString()))
+                        {
+                            node.RemoveValue(loc.ToString());
+                        }
+                        node.AddValue(loc.ToString(), landedLocations[loc].ToString());
+                    }
+                }
+
             }
         }
 
         public override bool check(Vessel vessel)
         {
-            if ((vessel != null) && vessel.isEVA() && vessel.isOnSurface())
+            if ((vessel != null) && vessel.isEVA())
             {
-                Body body = vessel.getCurrentBody();
-                if (bodies.Contains(body))
+                if (locations == null)
                 {
-                    if (landedBodies.ContainsKey(body))
+                    if (vessel.isOnSurface())
                     {
-                        landedBodies.Remove(body);
-                    }
-                    landedBodies.Add(body, true);
+                        Body body = vessel.getCurrentBody();
+                        if (bodies.Contains(body))
+                        {
+                            if (landedBodies.ContainsKey(body))
+                            {
+                                landedBodies.Remove(body);
+                            }
+                            landedBodies.Add(body, true);
 
-                    resetCounter();
-                    foreach (var x in landedBodies.Where(kv => kv.Value))
+                            resetCounter();
+                            foreach (var x in landedBodies.Where(kv => kv.Value))
+                            {
+                                increaseCounter();
+                            }
+                        }
+                    }
+                } else
+                {
+                    if (vessel.isOnSurface() && !inSpace)
                     {
-                        increaseCounter();
+                        foreach (var loc in locations)
+                        {
+                            if (loc.isAtLocation(vessel))
+                            {
+                                if (landedLocations.ContainsKey(loc))
+                                {
+                                    landedLocations.Remove(loc);
+                                }
+                                landedLocations.Add(loc, true);
+
+                                resetCounter();
+                                foreach (var x in landedLocations.Where(kv => kv.Value))
+                                {
+                                    increaseCounter();
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+
                     }
                 }
             }

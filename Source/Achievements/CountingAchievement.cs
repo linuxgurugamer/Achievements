@@ -20,43 +20,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Achievements {
-	internal abstract class CountingAchievement : AchievementBase {
-		public readonly int minRequired;
+namespace Achievements
+{
+    internal abstract class CountingAchievement : AchievementBase
+    {
+        public readonly int minRequired;
 
-		private int count;
+        private int count;
 
-		protected CountingAchievement(int minRequired) {
-			this.minRequired = minRequired;
-		}
+        protected CountingAchievement(int minRequired)
+        {
+            this.minRequired = minRequired;
+        }
 
-		public override void init(ConfigNode node) {
-			if (node.HasValue("count")) {
-				count = int.Parse(node.GetValue("count"));
-			}
-		}
+        public override void init(ConfigNode node)
+        {
+            if (node.HasValue("count"))
+            {
+                count = int.Parse(node.GetValue("count"));
+            }
+        }
 
-		public override void save(ConfigNode node) {
-			if (node.HasValue("count")) {
-				node.RemoveValue("count");
-			}
-			node.AddValue("count", count.ToString());
-		}
+        public override void save(ConfigNode node)
+        {
+            if (node.HasValue("count"))
+            {
+                node.RemoveValue("count");
+            }
+            node.AddValue("count", count.ToString());
+        }
 
-		protected void increaseCounter() {
-			count++;
-		}
+        protected void increaseCounter()
+        {
+            count++;
+        }
 
-		protected void resetCounter() {
-			count = 0;
-		}
+        protected void resetCounter()
+        {
+            count = 0;
+        }
 
-		public int getCount() {
-			return count;
-		}
+        public int getCount()
+        {
+            return count;
+        }
 
-		public override bool check(Vessel vessel) {
-			return count >= minRequired;
-		}
-	}
+        public override bool check(Vessel vessel)
+        {
+            return count >= minRequired;
+        }
+    }
 }

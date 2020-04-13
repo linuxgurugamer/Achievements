@@ -88,9 +88,7 @@ namespace Achievements
                 new BodyLanding(Body.KERBIN, false, false, 10000, -1, new Location[] { Location.ISLAND_RUNWAY },
                     "Not As Bad As It Looks", "Land on the island runway from an altitude of at least 10000 m.", "landing.islandRunway"),
                 new BodyLanding(Body.MUN, false, true, -1, -1, new Location[] { Location.ARMSTRONG_MEMORIAL },
-                    "First... Not", "Land at the Armstrong Memorial.", "landing.armstrongMemorial").hide(),
-                new BodyLanding(Body.INACCESSABLE, false, true, -1, 5, new Location[0], "I See What You Did There",
-                    "Land near the equator on Inaccessable.", "landing.inaccessable.equator").addon()
+                    "First... Not", "Land at the Armstrong Memorial.", "landing.armstrongMemorial").hide()
             });
 
             var l = new BodyLanding(Body.KERBIN, false, true, -1, -1, new Location[] { Location.KERBIN_NORTH_POLE, Location.KERBIN_SOUTH_POLE },

@@ -34,11 +34,7 @@ namespace Achievements
             }
             achievements.AddRange(new Achievement[] {
                 new SurfaceSample(),
-                new AllBodiesSurfaceSample(Body.STOCK_LANDABLE, "Pile of Dirt", "Take surface samples on all planets and moons.", "surfaceSample.allBodies"),
-				//new AllBodiesSurfaceSample(Body.SENTAR_LANDABLE, "Another Pile of Dirt", "Take surface samples on all planets and moons in the Sentar and Serious systems.",
-				//	"surfaceSample.allBodies.sentar").addon(),
-				new AllBodiesSurfaceSample(Body.ALL_LANDABLE, "Another Pile of Dirt", "Take surface samples on all planets and moons in the system(s).",
-                    "surfaceSample.allBodies").addon(),
+                new AllBodiesSurfaceSample(Body.ALL_LANDABLE, "Pile of Dirt", "Take surface samples on all planets and moons.", "surfaceSample.allBodies"),
                 new AsteroidSample()
             });
             return achievements;

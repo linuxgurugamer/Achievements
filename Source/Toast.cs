@@ -23,7 +23,8 @@ using UnityEngine;
 
 namespace Achievements {
 	internal class Toast {
-		private const long SHOW_TIMEOUT = 10000;
+		//private const long SHOW_TIMEOUT = 10000;
+		private long SHOW_TIMEOUT = 10000;
 		private const int NAV_BALL_HEIGHT = 189;
 
 		private Achievement achievement;
@@ -55,7 +56,9 @@ namespace Achievements {
 		internal bool isTimedOut() {
 			if (firstShown > 0) {
 				long now = DateTime.UtcNow.Ticks / 10000;
-				return (now - firstShown) >= SHOW_TIMEOUT;
+				return (now - firstShown) >= HighLogic.CurrentGame.Parameters.CustomParams<AchOptions>().achievementDisplayTime * 1000;
+
+					//SHOW_TIMEOUT;
 			} else {
 				return false;
 			}

@@ -58,6 +58,9 @@ namespace Achievements
 
         internal void draw()
         {
+            if (HighLogic.CurrentGame.Parameters.CustomParams<AchOptions>().useKSPskin)
+                GUI.skin = HighLogic.Skin;
+
             rect = ClickThruBlocker.GUILayoutWindow(id, rect, drawContents, "Achievements (earned " + earnedAchievements.Count() + " of " + achievements.getValuesCount() + ")");
 
             editorLock.draw(rect.Contains(Utils.getMousePosition()));

@@ -65,8 +65,8 @@ namespace Achievements
         internal static readonly Body THUD = new Body("Thud");
         internal static readonly Body SERIOUS = new Body("Serious");
         internal static readonly Body JOKER = new Body("Joker");
-#endif
         internal static readonly Body INACCESSABLE = new Body("Inaccessable");
+#endif
         internal static readonly IEnumerable<Body> STOCK_ALL = new Body[] { SUN, MOHO, EVE, KERBIN, DUNA, DRES, JOOL, EELOO, GILLY, MUN, MINMUS, IKE, LAYTHE, VALL, TYLO, BOP, POL };
         //internal static readonly IEnumerable<Body> STOCK_PLANETS = new Body[] { MOHO, EVE, KERBIN, DUNA, DRES, JOOL, EELOO };
         //internal static readonly IEnumerable<Body> STOCK_PLANETS_WITHOUT_KERBIN = new Body[] { MOHO, EVE, DUNA, DRES, JOOL, EELOO };

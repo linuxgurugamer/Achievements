@@ -27,6 +27,9 @@
     Removed the installScenaro() method 
     REmoved old code to convert old storage to new method
     Removed updatechecker
+    Added settings page for:
+        KSP Skin flag
+        Achievement timeout value
 
 1.6.3, 2014-07-27
 - In addition to the automatic update check, the plugin now also gets KSP versions

@@ -44,6 +44,9 @@ namespace Achievements
 
         internal void draw()
         {
+            if (HighLogic.CurrentGame.Parameters.CustomParams<AchOptions>().useKSPskin)
+                GUI.skin = HighLogic.Skin;
+
             rect = ClickThruBlocker.GUILayoutWindow(id, rect, drawContents, title);
 
             editorLock.draw(rect.Contains(Utils.getMousePosition()));

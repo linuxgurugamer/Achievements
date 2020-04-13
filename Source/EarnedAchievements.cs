@@ -93,28 +93,56 @@ namespace Achievements
         // the following was added to wait until all the bodies had been initialized
         // This is necessary since the hard-coded version didn't need to wait becuase they
         // were initialized at the compile time
+
+        // The various modules need to be initialized in a specific order:
+        //
+        // Modules to run before ready to go, in order of need
+
+        //  Body
+        // All static achievements via getAchievements()
+        // AchievementLoad
+        // EarnedAchievements
         public override void OnLoad(ConfigNode node)
         {
             StartCoroutine(WaitForBody(node));
         }
         IEnumerator WaitForBody(ConfigNode node)
         {
-            WaitForSeconds wfs = new WaitForSeconds(0.2f);
+            WaitForSeconds wfs = new WaitForSeconds(0.25f);
+
+            // First wait for the Body to be initialized, check ever 1/4 second until it is
             while (!Body.initted)
                 yield return wfs;
-            achievements = createAchievements();
 
+            // Now the static achievements
+            achievements = createAchievements(); // which calls the getAchievements() methods in all the classes
+
+            // Now load the custom achievements from any/all configs
             if (node.HasNode("achievements"))
             {
                 node = node.GetNode("achievements");
+
+                AchievementLoad al = new AchievementLoad();
+                al.LoadCfgAchievements();
+
+                earnedAchievements = loadEarnedAchievements(node);
             }
+#if false
+            Log.info("Achievement Dump Start");
+            int cat = 0, cnt = 0;
+            foreach (var c in achievements)
+            {
+                cat++;
+                cnt = 0;
+                foreach (var e in c.Value)
+                {
+                    cnt++;
+                    Log.info(cat + "." + cnt + ":  " + e.getKey() + ": " + e.getTitle() + ":" + e.getText());
+                }
+            }
+            Log.info("Achievement Dump End");
+#endif
 
-            AchievementLoad al = new AchievementLoad();
-            al.LoadCfgAchievements();
-
-            earnedAchievements = loadEarnedAchievements(node);
-
-            //var b = achievementsList;
             yield return null;
         }
 

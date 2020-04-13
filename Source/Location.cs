@@ -58,10 +58,13 @@ namespace Achievements
         }
         override public string ToString()
         {
+            if (circle)
             return "Location.body: " + body.name + ", latitude/longitude: " + latitude + "/" + longitude +
-                ", latitude2/longitude2: " + latitude2 + "/" + longitude2 +
                 ", radius: " + radius + ", circle: " + circle;
+            return "Location.body: " + body.name + ", latitude/longitude: " + latitude + "/" + longitude +
+                ", latitude2/longitude2: " + latitude2 + "/" + longitude2;
         }
+
 
         // FIXME: does only work for rectangles where a side is exactly parallel to the equator
         internal Location(Body body, double latitude, double longitude, double latitude2, double longitude2)
