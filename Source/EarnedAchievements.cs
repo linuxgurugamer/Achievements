@@ -195,6 +195,8 @@ namespace Achievements
 
         private void saveEarnedAchievements(ConfigNode node)
         {
+            if (achievementsList == null || earnedAchievements == null)
+                return;
             foreach (Achievement achievement in achievementsList)
             {
                 ConfigNode achievementNode = node.AddNode(achievement.getKey());

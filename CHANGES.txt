@@ -1,5 +1,8 @@
 ﻿ChangeLog
 
+1.7.0.1
+    Fixed nullref when starting a sandbox (and possibly other) game
+
 1.7.0
     Adoption by Linuxgurugamer
     Added support for ClickThroughBlocker
