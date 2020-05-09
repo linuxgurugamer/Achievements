@@ -1,9 +1,9 @@
 ﻿ChangeLog
 
-1.7.0.1
+1.10.0.1
     Fixed nullref when starting a sandbox (and possibly other) game
 
-1.7.0
+1.10.0
     Adoption by Linuxgurugamer
     Added support for ClickThroughBlocker
     Added version file
@@ -33,6 +33,32 @@
     Added settings page for:
         KSP Skin flag
         Achievement timeout value
+
+1.9.4.2
+    Updated for KSP 1.4.1
+
+1.9.4.1
+    Updated for KSP 1.2
+
+1.9.4
+    Recompiled and fixed for version 1.2 preRelease of KSP. Don't use this for 1.1.3 or you will have issues.. Like bad ones.
+
+1.9.3
+    Recompile and AVC update for KSP 1.1.3
+
+1.9.2
+    Update for KSP 1.12
+
+1.9 
+    No more dependency for Blizzy Tool bar.. Been wanting to transfer to default KSP tool bar for awhile now.
+    Updated for 1.1 PreRelease.
+    Added MiniAVC for version checking.
+
+1.8 
+    Pre Release For KSP 1.1 PreRelease.
+    No more dependency for Blizzy Tool bar.. Been wanting to transfer to default KSP tool bar for awhile now.
+    Updated for 1.1 PreRelease.
+
 
 1.6.3, 2014-07-27
 - In addition to the automatic update check, the plugin now also gets KSP versions
