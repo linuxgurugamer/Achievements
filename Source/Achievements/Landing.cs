@@ -153,7 +153,7 @@ namespace Achievements
                     minAltitudeStep = (minAltitude < 0) || (vessel.altitude >= minAltitude);
                 }
                 Log.info("minAltitudeStep: " + minAltitudeStep);
-                return !flyingStep && stableOrbitStep && minAltitudeStep && vessel.isOnSurface() && (vessel.horizontalSrfSpeed < 1d);
+                return flyingStep && stableOrbitStep && minAltitudeStep && vessel.isOnSurface() && (vessel.horizontalSrfSpeed < 1d);
             }
             else
             {

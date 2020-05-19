@@ -83,7 +83,7 @@ namespace Achievements
             }
         }
 
-        internal Dictionary<Achievement, AchievementEarn> earnedAchievements
+        internal Dictionary<string, AchievementEarn> earnedAchievements
         {
             get;
             private set;
@@ -167,9 +167,9 @@ namespace Achievements
             }
         }
 
-        private Dictionary<Achievement, AchievementEarn> loadEarnedAchievements(ConfigNode node)
+        private Dictionary<string, AchievementEarn> loadEarnedAchievements(ConfigNode node)
         {
-            Dictionary<Achievement, AchievementEarn> result = new Dictionary<Achievement, AchievementEarn>();
+            Dictionary<string, AchievementEarn> result = new Dictionary<string, AchievementEarn>();
 
             // new way
             foreach (Achievement achievement in achievementsList)
@@ -184,8 +184,16 @@ namespace Achievements
                     {
                         long time = long.Parse(achievementNode.GetValue("time"));
                         string flightName = achievementNode.HasValue("flight") ? achievementNode.GetValue("flight") : null;
-                        AchievementEarn earn = new AchievementEarn(time, flightName);
-                        result.Add(achievement, earn);
+                        AchievementEarn earn = new AchievementEarn(time, flightName, achievement);
+                        if (result.ContainsKey(achievement.getKey()))
+                        {
+                            Log.info("loadEarnedAchievements, duplicate key: " + achievement.getKey());
+                        }
+                        else
+                        {
+                            result.Add(achievement.getKey(), earn);
+                            Log.info("loadEarnedAchievements, adding key: " + achievement.getKey());
+                        }
                     }
                 }
             }
@@ -203,7 +211,7 @@ namespace Achievements
 
                 achievement.save(achievementNode);
 
-                AchievementEarn earn = earnedAchievements.ContainsKey(achievement) ? earnedAchievements[achievement] : null;
+                AchievementEarn earn = earnedAchievements.ContainsKey(achievement.getKey()) ? earnedAchievements[achievement.getKey()] : null;
                 if (earn != null)
                 {
                     achievementNode.AddValue("time", earn.time);

@@ -24,10 +24,14 @@ namespace Achievements {
 	internal class AchievementEarn {
 		internal readonly long time;
 		internal readonly string flightName;
+		//internal Achievement achievement;
+		string key;
 
-		internal AchievementEarn(long time, string flightName) {
+		internal AchievementEarn(long time, string flightName, Achievement achievement) {
 			this.time = time;
 			this.flightName = flightName;
+			//this.achievement = achievement;
+			key = achievement.getKey();
 		}
 	}
 }

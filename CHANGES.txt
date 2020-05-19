@@ -3,6 +3,9 @@
 1.10.0.2
     Fixed bug where achievements were being dropped 
     Added new toggle to Show all earned only
+    Added check for duplicate keys when loading achievement while switching scenes
+    Added more EVA achievements, one for each landable planet.
+    Added random quotes for the additional EVA achievements
 
 1.10.0.1
     Fixed nullref when starting a sandbox (and possibly other) game

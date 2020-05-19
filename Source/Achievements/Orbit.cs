@@ -119,7 +119,13 @@ namespace Achievements
 
         public override string getKey()
         {
-            return "stableOrbit";
+            string str = "stableOrbit." + minAltitude.ToString("F0") + "." +maxAltitude.ToString("F0") +"."+
+                minEccentricity.ToString("F0") + "." + maxEccentricity.ToString("F0") + "." +
+                minInclination.ToString("F0") + "." + maxInclination.ToString("F0");
+            foreach (Body body in bodies)
+                str += "." + body.name;
+            return str;
+                //return "stableOrbit" ;
         }
     }
 

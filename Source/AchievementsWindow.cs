@@ -31,7 +31,7 @@ namespace Achievements
         internal Callback closeCallback;
 
         private Dictionary<Category, IEnumerable<Achievement>> achievements;
-        private Dictionary<Achievement, AchievementEarn> earnedAchievements;
+        private Dictionary<string, AchievementEarn> earnedAchievements;
         //private bool newVersionAvailable;
         private int id = new System.Random().Next(int.MaxValue);
         private Rect rect;
@@ -42,7 +42,7 @@ namespace Achievements
         private EditorLock editorLock = new EditorLock("Achievements_achievementsList");
 
         internal AchievementsWindow(Dictionary<Category, IEnumerable<Achievement>> achievements,
-            Dictionary<Achievement, AchievementEarn> earnedAchievements /*, bool newVersionAvailable */)
+            Dictionary<string, AchievementEarn> earnedAchievements /*, bool newVersionAvailable */)
         {
 
             this.achievements = achievements;
@@ -170,7 +170,7 @@ namespace Achievements
             bool first = true;
             foreach (Achievement achievement in achievements)
             {
-                AchievementEarn earn = earnedAchievements.ContainsKey(achievement) ? earnedAchievements[achievement] : null;
+                AchievementEarn earn = earnedAchievements.ContainsKey(achievement.getKey()) ? earnedAchievements[achievement.getKey()] : null;
 
                 if (!showEarned || earn != null)
                 {
@@ -217,7 +217,7 @@ namespace Achievements
 
         private void achievementClicked(Achievement achievement)
         {
-            if (earnedAchievements.ContainsKey(achievement))
+            if (earnedAchievements.ContainsKey(achievement.getKey()))
             {
                 expandedAchievement = achievement;
             }

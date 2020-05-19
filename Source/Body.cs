@@ -124,7 +124,7 @@ namespace Achievements
             return result;
         }
 
-        private static IEnumerable<Body> flatten(List<Body> bodies)
+        internal static IEnumerable<Body> flatten(List<Body> bodies)
         {
             List<Body> result = new List<Body>();
             foreach (Body bs in bodies)

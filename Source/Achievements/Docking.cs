@@ -26,9 +26,10 @@ namespace Achievements {
 		public IEnumerable<Achievement> getAchievements() {
 			return new Achievement[] {
 				new Docking(Docking.Mode.ORBIT, (action) => action.from.isDockingPort() && action.to.isDockingPort(),
-					"We're Meant to Be Together", "Perform a docking maneuver in orbit.", "docking"),
+					"We're Meant to Be Together", "Perform a docking maneuver in orbit.", "docking.orbit"),
 				new Docking(Docking.Mode.ANY, (action) => action.from.isAsteroid() || action.to.isAsteroid(),
 					"Rock Collector", "Grab an asteroid.", "docking.asteroid")
+				
 			};
 		}
 

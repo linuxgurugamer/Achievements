@@ -194,7 +194,7 @@ namespace Achievements
                 {
                     foreach (Achievement achievement in EarnedAchievements.instance.achievementsList)
                     {
-                        if (EarnedAchievements.instance.earnedAchievements == null || !EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
+                        if (EarnedAchievements.instance.earnedAchievements == null || !EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement.getKey()))
                         {
  
                                 string key = achievement.getKey();
@@ -207,8 +207,8 @@ namespace Achievements
                                 if (achievement.check(vessel))
                                 {
                                     string key2 = achievement.getKey();
-                                    AchievementEarn earn = new AchievementEarn(now, (vessel != null) ? vessel.vesselName : Achievements.UNKNOWN_VESSEL);
-                                    EarnedAchievements.instance.earnedAchievements.Add(achievement, earn);
+                                    AchievementEarn earn = new AchievementEarn(now, (vessel != null) ? vessel.vesselName : Achievements.UNKNOWN_VESSEL, achievement);
+                                    EarnedAchievements.instance.earnedAchievements.Add(achievement.getKey(), earn);
 
                                     // queue for later display
                                     queuedEarnedAchievements.Add(achievement.getKey(), achievement);
@@ -237,7 +237,7 @@ namespace Achievements
                     bool found = false;
                     foreach (var e in EarnedAchievements.instance.earnedAchievements)
                     {
-                        if (e.Key.getKey() == achievement.getKey())
+                        if (e.Key == achievement.getKey())
                         {
                             toast = new Toast(achievement, e.Value);
                             playAchievementEarnedClip();
