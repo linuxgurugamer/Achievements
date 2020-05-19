@@ -1,5 +1,9 @@
 ﻿ChangeLog
 
+1.10.0.2
+    Fixed bug where achievements were being dropped 
+    Added new toggle to Show all earned only
+
 1.10.0.1
     Fixed nullref when starting a sandbox (and possibly other) game
 

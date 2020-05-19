@@ -73,7 +73,18 @@ namespace Achievements
             GUILayout.BeginHorizontal();
             drawCategoriesList(achievements.Keys.OrderBy(c => c.title, StringComparer.CurrentCultureIgnoreCase));
             GUILayout.Space(15);
-            drawAchievementsList(achievements[selectedCategory]);
+            achievementsScrollPos = GUILayout.BeginScrollView(achievementsScrollPos);
+            if (showAllEarned)
+            {
+                showEarned = true;
+                var categories = achievements.Keys.OrderBy(c => c.title, StringComparer.CurrentCultureIgnoreCase);
+                foreach (Category category in categories)
+                    drawAchievementsList(achievements[category]);
+            }
+            else
+                drawAchievementsList(achievements[selectedCategory]);
+            GUILayout.EndScrollView();
+
             GUILayout.EndHorizontal();
 
             GUILayout.Space(20);
@@ -124,6 +135,7 @@ namespace Achievements
         }
 
         bool showEarned = true;
+        bool showAllEarned = false;
         private void drawCategoriesList(IEnumerable<Category> categories)
         {
             GUILayout.BeginVertical(GUILayout.Width(220), GUILayout.ExpandWidth(true));
@@ -148,12 +160,13 @@ namespace Achievements
             }
             GUILayout.FlexibleSpace();
             showEarned = GUILayout.Toggle(showEarned, "Show earned only");
+            showAllEarned = GUILayout.Toggle(showAllEarned, "Show all earned only");
             GUILayout.EndVertical();
         }
 
         private void drawAchievementsList(IEnumerable<Achievement> achievements)
         {
-            achievementsScrollPos = GUILayout.BeginScrollView(achievementsScrollPos);
+            //achievementsScrollPos = GUILayout.BeginScrollView(achievementsScrollPos);
             bool first = true;
             foreach (Achievement achievement in achievements)
             {
@@ -191,7 +204,7 @@ namespace Achievements
                     }
                 }
             }
-            GUILayout.EndScrollView();
+            //GUILayout.EndScrollView();
         }
 
         internal void update()

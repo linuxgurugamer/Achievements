@@ -132,27 +132,35 @@ namespace Achievements
 
         public override bool check(Vessel vessel)
         {
+            if (vessel != null)
+                UnityEngine.Debug.Log("Landing.check, vessel: " + vessel.GetDisplayName());
             if ((vessel != null) && !vessel.isEVA())
             {
                 if (!flyingStep)
                 {
                     flyingStep = !vessel.isOnSurface();
                 }
+                Log.info("flyingStep: " + flyingStep);
 
                 if (!stableOrbitStep)
                 {
                     stableOrbitStep = !stableOrbit || vessel.isInStableOrbit();
                 }
+                Log.info("stableOrbitStep: " + stableOrbitStep);
 
                 if (!minAltitudeStep)
                 {
                     minAltitudeStep = (minAltitude < 0) || (vessel.altitude >= minAltitude);
                 }
-
-                return flyingStep && stableOrbitStep && minAltitudeStep && vessel.isOnSurface() && (vessel.horizontalSrfSpeed < 1d);
+                Log.info("minAltitudeStep: " + minAltitudeStep);
+                return !flyingStep && stableOrbitStep && minAltitudeStep && vessel.isOnSurface() && (vessel.horizontalSrfSpeed < 1d);
             }
             else
             {
+                if (vessel != null)
+                    Log.info("vessel.isEVA");
+                else
+                    Log.info("vessel is null");
                 return false;
             }
         }

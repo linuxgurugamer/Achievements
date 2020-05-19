@@ -50,7 +50,7 @@ namespace Achievements
         private AudioClip achievementEarnedClip;
         private AudioSource achievementEarnedAudioSource;
         private Toast toast;
-        private HashSet<Achievement> queuedEarnedAchievements = new HashSet<Achievement>();
+        private Dictionary<string, Achievement> queuedEarnedAchievements = new Dictionary<string, Achievement>();
         private AchievementsWindow achievementsWindow;
         private static ToolbarControl toolbarControl;
 
@@ -188,14 +188,17 @@ namespace Achievements
         {
             long now = DateTime.UtcNow.Ticks / 10000; // 1 millisecond
             if ((now - lastCheck) >= CHECK_INTERVAL) // this delays it to every 1.5 seconds
-            {
-                Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
+           {
+               Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
                 if (vessel != null && EarnedAchievements.instance != null)
                 {
                     foreach (Achievement achievement in EarnedAchievements.instance.achievementsList)
                     {
                         if (EarnedAchievements.instance.earnedAchievements == null || !EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
                         {
+ 
+                                string key = achievement.getKey();
+
                             //Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
                             //if (vessel != null)
                             //{
@@ -203,17 +206,18 @@ namespace Achievements
                             {
                                 if (achievement.check(vessel))
                                 {
-                                    string key = achievement.getKey();
+                                    string key2 = achievement.getKey();
                                     AchievementEarn earn = new AchievementEarn(now, (vessel != null) ? vessel.vesselName : Achievements.UNKNOWN_VESSEL);
                                     EarnedAchievements.instance.earnedAchievements.Add(achievement, earn);
 
                                     // queue for later display
-                                    queuedEarnedAchievements.Add(achievement);
+                                    queuedEarnedAchievements.Add(achievement.getKey(), achievement);
                                 }
                             }
 
                             catch (Exception e)
                             {
+                                Debug.Log("checkAchievements 1.5");
                                 Debug.LogException(e);
                             }
                         }
@@ -225,13 +229,24 @@ namespace Achievements
 
                 if ((queuedEarnedAchievements.Count() > 0) && (toast == null))
                 {
-                    Achievement achievement = queuedEarnedAchievements.First<Achievement>();
-                    queuedEarnedAchievements.Remove(achievement);
-
-                    toast = new Toast(achievement, EarnedAchievements.instance.earnedAchievements[achievement]);
-                    playAchievementEarnedClip();
-                    awardReputation(achievement);
-
+                    
+                    Achievement achievement = queuedEarnedAchievements[queuedEarnedAchievements.Keys.Min()];
+                    queuedEarnedAchievements.Remove(achievement.getKey());
+                    //if (EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
+                    toast = null;
+                    bool found = false;
+                    foreach (var e in EarnedAchievements.instance.earnedAchievements)
+                    {
+                        if (e.Key.getKey() == achievement.getKey())
+                        {
+                            toast = new Toast(achievement, e.Value);
+                            playAchievementEarnedClip();
+                            awardReputation(achievement);
+                            found = true;
+                            break;
+                        }
+                    }
+                        
                 }
 
                 lastCheck = now;
