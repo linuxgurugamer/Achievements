@@ -1,5 +1,9 @@
 ﻿ChangeLog
 
+1.10.1
+    Added check to see if KRASH is active, if it is, bypass the achievement check, checked once every 5 seconds
+    Changed Update to SlowUpdate, called 4x a second instead of 50x a second, to decrease impact on performance
+
 1.10.0.3
     Fixed the issue where achievements were being lost
     Added more EVA achievements, one for each landable planet.

@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ using UnityEngine;
 using KSP.UI.Screens;
 using KSPAchievements;
 using ToolbarControl_NS;
+using System.Diagnostics.Eventing.Reader;
+using KRASH;
 
 namespace Achievements
 {
@@ -36,6 +39,24 @@ namespace Achievements
 
     }
 
+    internal  class KRASH_Interface : MonoBehaviour
+    {
+        static double lastTimeChecked = 0;
+        static bool simActive = false;
+        internal static  bool KRASH_Active()
+        {
+            if (Planetarium.GetUniversalTime() - lastTimeChecked > 0)
+            {
+                KRASHPersistent krashObject = FindObjectOfType<KRASHPersistent>();
+
+                if (krashObject != null)
+                    simActive = krashObject.shelterSimulationActive;
+                Log.info("KRASH_Active: " + simActive);
+            }
+            return simActive;
+        }
+
+    }
     [KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
     public class Achievements : MonoBehaviour
     {
@@ -60,6 +81,7 @@ namespace Achievements
 #endif
         private bool showGui = true;
 
+
         public void Start()
         {
             Log.debug("Achievements.Start");
@@ -81,6 +103,7 @@ namespace Achievements
 
             GameEvents.onShowUI.Add(onShowUI);
             GameEvents.onHideUI.Add(onHideUI);
+            StartCoroutine("SlowUpdate");
             DontDestroyOnLoad(this);
         }
         public void Awake()
@@ -144,9 +167,20 @@ namespace Achievements
             DestroyButtons();
             GameEvents.onShowUI.Remove(onShowUI);
             GameEvents.onHideUI.Remove(onHideUI);
+            StopCoroutine("SlowUpdate");
         }
 
-        internal void Update()
+        IEnumerator SlowUpdate()
+        {
+            while (true)
+            {
+                DoUpdate();
+                yield return new WaitForSeconds(0.25f);
+            }
+        }
+
+        
+        internal void DoUpdate()
         {
             // Since bodies are now generated from the database rather than being hardcoded,
             // the following "if" was added to wait until all the bodies and achievements had been initialized
@@ -154,6 +188,12 @@ namespace Achievements
             // were initialized at the compile time
             if (EarnedAchievements.instance != null && EarnedAchievements.instance.allAchievementsCreated)
             {
+                if (SpaceTuxUtility.HasMod.hasMod("KRASH"))
+                {
+                    Log.info("KRASH found");
+                    if (KRASH_Interface.KRASH_Active())
+                        return;
+                }
                 updateAchievements();
                 checkAchievements();
 
@@ -188,16 +228,16 @@ namespace Achievements
         {
             long now = DateTime.UtcNow.Ticks / 10000; // 1 millisecond
             if ((now - lastCheck) >= CHECK_INTERVAL) // this delays it to every 1.5 seconds
-           {
-               Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
+            {
+                Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
                 if (vessel != null && EarnedAchievements.instance != null)
                 {
                     foreach (Achievement achievement in EarnedAchievements.instance.achievementsList)
                     {
                         if (EarnedAchievements.instance.earnedAchievements == null || !EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement.getKey()))
                         {
- 
-                                string key = achievement.getKey();
+
+                            string key = achievement.getKey();
 
                             //Vessel vessel = (FlightGlobals.fetch != null) ? FlightGlobals.ActiveVessel : null;
                             //if (vessel != null)
@@ -229,7 +269,7 @@ namespace Achievements
 
                 if ((queuedEarnedAchievements.Count() > 0) && (toast == null))
                 {
-                    
+
                     Achievement achievement = queuedEarnedAchievements[queuedEarnedAchievements.Keys.Min()];
                     queuedEarnedAchievements.Remove(achievement.getKey());
                     //if (EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
@@ -246,7 +286,7 @@ namespace Achievements
                             break;
                         }
                     }
-                        
+
                 }
 
                 lastCheck = now;
