@@ -51,7 +51,7 @@ namespace Achievements
 
                 if (krashObject != null)
                     simActive = krashObject.shelterSimulationActive;
-                Log.info("KRASH_Active: " + simActive);
+                //Log.info("KRASH_Active: " + simActive);
             }
             return simActive;
         }
@@ -190,7 +190,7 @@ namespace Achievements
             {
                 if (SpaceTuxUtility.HasMod.hasMod("KRASH"))
                 {
-                    Log.info("KRASH found");
+                    //Log.info("KRASH found");
                     if (KRASH_Interface.KRASH_Active())
                         return;
                 }

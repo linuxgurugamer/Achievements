@@ -1,5 +1,8 @@
 ﻿ChangeLog
 
+1.10.1.1
+    Removed some log spam related to KRASH
+
 1.10.1
     Added check to see if KRASH is active, if it is, bypass the achievement check, checked once every 5 seconds
     Changed Update to SlowUpdate, called 4x a second instead of 50x a second, to decrease impact on performance
