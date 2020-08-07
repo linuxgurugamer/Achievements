@@ -1,5 +1,8 @@
 ﻿ChangeLog
 
+1.10.1.2
+    More log spam reduction
+
 1.10.1.1
     Removed some log spam related to KRASH
 

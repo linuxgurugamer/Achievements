@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,7 @@ namespace Achievements {
 			log(LogLevel.DEBUG, null, message, @params);
 		}
 
+		[ConditionalAttribute("DEBUG")]
 		internal static void info(string message, params object[] @params) {
 			log(LogLevel.INFO, null, message, @params);
 		}
@@ -74,15 +76,15 @@ namespace Achievements {
 					case LogLevel.DEBUG:
 						goto case LogLevel.INFO;
 					case LogLevel.INFO:
-						logMethod = Debug.Log;
+						logMethod = UnityEngine.Debug.Log;
 						break;
 
 					case LogLevel.WARN:
-						logMethod = Debug.LogWarning;
+						logMethod = UnityEngine.Debug.LogWarning;
 						break;
 
 					case LogLevel.ERROR:
-						logMethod = Debug.LogError;
+						logMethod = UnityEngine.Debug.LogError;
 						break;
 
 					default:
@@ -91,7 +93,7 @@ namespace Achievements {
 
 				logMethod(getLogMessage(level, message, @params));
 				if (e != null) {
-					Debug.LogException(e);
+					UnityEngine.Debug.LogException(e);
 				}
 			}
 		}
