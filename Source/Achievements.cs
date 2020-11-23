@@ -90,7 +90,7 @@ namespace Achievements
 #else
             Log = new KSP_Log.Log("Achievements", KSP_Log.Log.LEVEL.ERROR);
 #endif
-            Log.Debug("Achievements.Start");
+            Log.Info("Achievements.Start");
             fetch = this;
 
             achievementEarnedClip = GameDatabase.Instance.GetAudioClip("Achievements/achievement");
@@ -142,7 +142,7 @@ namespace Achievements
                 );
 
             }
-            else { Debug.Log("achievment CreateButtons Failed"); }
+            else { Log.Debug("achievment CreateButtons Failed"); }
         }
         private void AchieveButtonOn()
         {
@@ -224,7 +224,7 @@ namespace Achievements
                     }
                     catch (Exception e)
                     {
-                        Debug.LogException(e);
+                        Log.Exception(e);
                     }
                 }
             }
@@ -263,16 +263,15 @@ namespace Achievements
 
                             catch (Exception e)
                             {
-                                Debug.Log("checkAchievements 1.5");
-                                Debug.LogException(e);
+                                Log.Exception(e);
                             }
                         }
                     }
                 }
-
-                //long done = DateTime.UtcNow.Ticks / 10000;
-                //Debug.LogWarning("checking achievements took " + (done - now) + " ms");
-
+#if DEBUG
+                long done = DateTime.UtcNow.Ticks / 10000;
+                Log.Info("checking achievements took " + (done - now) + " ms");
+#endif
                 if ((queuedEarnedAchievements.Count() > 0) && (toast == null))
                 {
 

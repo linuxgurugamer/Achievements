@@ -271,7 +271,7 @@ namespace Achievements
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException(e);
+                    Log.Exception(e);
                 }
             }
 
@@ -293,7 +293,7 @@ namespace Achievements
                     }
                     catch (Exception)
                     {
-                        Debug.LogWarning("exception while loading types, ignoring assembly: " + assembly.FullName);
+                        Log.Warning("exception while loading types, ignoring assembly: " + assembly.FullName);
                     }
                 }
             }

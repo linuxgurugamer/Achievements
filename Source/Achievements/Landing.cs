@@ -135,7 +135,7 @@ namespace Achievements
         public override bool check(Vessel vessel)
         {
             if (vessel != null)
-                UnityEngine.Debug.Log("Landing.check, vessel: " + vessel.GetDisplayName());
+                Log.Info("Landing.check, vessel: " + vessel.GetDisplayName());
             if ((vessel != null) && !vessel.isEVA())
             {
                 if (!flyingStep)
