@@ -44,13 +44,13 @@
       <HintPath>$(KSPDIR)\GameData\000_ClickThroughBlocker\Plugins\ClickThroughBlocker.dll</HintPath>
     </Reference>
     <Reference Include="KRASH">
-      <HintPath>R:\KSP_1.9.1_dev\GameData\KRASH\Plugins\KRASH.dll</HintPath>
+      <HintPath>$(KSPDIR)\GameData\KRASH\Plugins\KRASH.dll</HintPath>
     </Reference>
     <Reference Include="KSP_Log">
-      <HintPath>R:\KSP_1.10.1_dev\GameData\SpaceTuxLibrary\Plugins\KSP_Log.dll</HintPath>
+      <HintPath>$(KSPDIR)\GameData\SpaceTuxLibrary\Plugins\KSP_Log.dll</HintPath>
     </Reference>
     <Reference Include="SpaceTuxUtility">
-      <HintPath>R:\KSP_1.9.1_dev\GameData\SpaceTuxLibrary\Plugins\SpaceTuxUtility.dll</HintPath>
+      <HintPath>$(KSPDIR)\GameData\SpaceTuxLibrary\Plugins\SpaceTuxUtility.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="ToolbarControl">
