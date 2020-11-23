@@ -23,6 +23,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
+using static Achievements.Achievements;
 
 namespace Achievements
 {
@@ -128,7 +129,7 @@ namespace Achievements
                 earnedAchievements = loadEarnedAchievements(node);
             }
 #if false
-            Log.info("Achievement Dump Start");
+            Log.Info("Achievement Dump Start");
             int cat = 0, cnt = 0;
             foreach (var c in achievements)
             {
@@ -137,10 +138,10 @@ namespace Achievements
                 foreach (var e in c.Value)
                 {
                     cnt++;
-                    Log.info(cat + "." + cnt + ":  " + e.getKey() + ": " + e.getTitle() + ":" + e.getText());
+                    Log.Info(cat + "." + cnt + ":  " + e.getKey() + ": " + e.getTitle() + ":" + e.getText());
                 }
             }
-            Log.info("Achievement Dump End");
+            Log.Info("Achievement Dump End");
 #endif
 
             yield return null;
@@ -187,12 +188,12 @@ namespace Achievements
                         AchievementEarn earn = new AchievementEarn(time, flightName, achievement);
                         if (result.ContainsKey(achievement.getKey()))
                         {
-                            Log.info("loadEarnedAchievements, duplicate key: " + achievement.getKey());
+                            Log.Info("loadEarnedAchievements, duplicate key: " + achievement.getKey());
                         }
                         else
                         {
                             result.Add(achievement.getKey(), earn);
-                            Log.info("loadEarnedAchievements, adding key: " + achievement.getKey());
+                            Log.Info("loadEarnedAchievements, adding key: " + achievement.getKey());
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Achievements</RootNamespace>
     <AssemblyName>Achievements</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -45,6 +45,9 @@
     </Reference>
     <Reference Include="KRASH">
       <HintPath>R:\KSP_1.9.1_dev\GameData\KRASH\Plugins\KRASH.dll</HintPath>
+    </Reference>
+    <Reference Include="KSP_Log">
+      <HintPath>R:\KSP_1.10.1_dev\GameData\SpaceTuxLibrary\Plugins\KSP_Log.dll</HintPath>
     </Reference>
     <Reference Include="SpaceTuxUtility">
       <HintPath>R:\KSP_1.9.1_dev\GameData\SpaceTuxLibrary\Plugins\SpaceTuxUtility.dll</HintPath>
@@ -93,7 +96,6 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="InfoWindow.cs" />
     <Compile Include="InstallChecker.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="PartExtensions.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="VesselExtensions.cs" />

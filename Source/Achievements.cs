@@ -26,6 +26,7 @@ using KSPAchievements;
 using ToolbarControl_NS;
 using System.Diagnostics.Eventing.Reader;
 using KRASH;
+using KSP_Log;
 
 namespace Achievements
 {
@@ -51,7 +52,7 @@ namespace Achievements
 
                 if (krashObject != null)
                     simActive = krashObject.shelterSimulationActive;
-                //Log.info("KRASH_Active: " + simActive);
+                //Log.Info("KRASH_Active: " + simActive);
             }
             return simActive;
         }
@@ -81,10 +82,15 @@ namespace Achievements
 #endif
         private bool showGui = true;
 
-
+        static public KSP_Log.Log Log = null;
         public void Start()
         {
-            Log.debug("Achievements.Start");
+#if DEBUg
+            Log = new KSP_Log.Log("Achievements", KSP_Log.Log.LEVEL.INFO);
+#else
+            Log = new KSP_Log.Log("Achievements", KSP_Log.Log.LEVEL.ERROR);
+#endif
+            Log.Debug("Achievements.Start");
             fetch = this;
 
             achievementEarnedClip = GameDatabase.Instance.GetAudioClip("Achievements/achievement");
@@ -115,7 +121,7 @@ namespace Achievements
         {
             AchieveButton = new Texture2D(2, 2);
             if (!ToolbarControl.LoadImageFromFile(ref AchieveButton, "GameData/Achievements/PluginData/Textures/AchievmentTrophyButton"))
-                Log.error("Unable to load AchievmentTrophyButton from file");
+                Log.Error("Unable to load AchievmentTrophyButton from file");
         }
 
         internal const string MODID = "Achievements_NS";
@@ -190,7 +196,7 @@ namespace Achievements
             {
                 if (SpaceTuxUtility.HasMod.hasMod("KRASH"))
                 {
-                    //Log.info("KRASH found");
+                    //Log.Info("KRASH found");
                     if (KRASH_Interface.KRASH_Active())
                         return;
                 }

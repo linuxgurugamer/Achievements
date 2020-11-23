@@ -21,6 +21,8 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using ToolbarControl_NS;
+using static Achievements.Achievements;
+
 
 namespace Achievements {
 	internal class AchievementGUI {
@@ -83,17 +85,17 @@ namespace Achievements {
 			toastExpandedTex = new Texture2D(2, 2);
 			toastAddonExpandedTex = new Texture2D(2, 2);
 			if (!ToolbarControl.LoadImageFromFile(ref toastTex, "GameData/Achievements/PluginData/Textures/toast"))
-				Log.error("Unable to load toast from file");
+				Log.Error("Unable to load toast from file");
 			if (!ToolbarControl.LoadImageFromFile(ref toastNotEarnedTex, "GameData/Achievements/PluginData/Textures/toast-not-earned"))
-				Log.error("Unable to load toast-not-earned from file");
+				Log.Error("Unable to load toast-not-earned from file");
 			if (!ToolbarControl.LoadImageFromFile(ref toastAddonTex, "GameData/Achievements/PluginData/Textures/toast-addon"))
-				Log.error("Unable to load toast-addon from file");
+				Log.Error("Unable to load toast-addon from file");
 			if (!ToolbarControl.LoadImageFromFile(ref toastAddonNotEarnedTex, "GameData/Achievements/PluginData/Textures/toast-addon-not-earned"))
-				Log.error("Unable to load toast-addon-not-earned from file");
+				Log.Error("Unable to load toast-addon-not-earned from file");
 			if (!ToolbarControl.LoadImageFromFile(ref toastExpandedTex, "GameData/Achievements/PluginData/Textures/toast-expanded"))
-				Log.error("Unable to load toast-expanded from file");
+				Log.Error("Unable to load toast-expanded from file");
 			if (!ToolbarControl.LoadImageFromFile(ref toastAddonExpandedTex, "GameData/Achievements/PluginData/Textures/toast-addon-expanded"))
-				Log.error("Unable to load toast-addon-expanded from file");
+				Log.Error("Unable to load toast-addon-expanded from file");
 			int width = TEX_WIDTH + 300;
 			int height = Screen.height / 2;
 

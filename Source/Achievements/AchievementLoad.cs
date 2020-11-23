@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using static Achievements.Achievements;
 
 namespace Achievements
 {
@@ -194,7 +195,7 @@ namespace Achievements
         {
             ss.bodies = GetAllbodies(bodies);
             ss.bodiesHash = ss.bodiesHash = new HashSet<string>(ss.bodies);
-            Log.info("AddBodiesTo: " + string.Join(", ", ss.bodies));
+            Log.Info("AddBodiesTo: " + string.Join(", ", ss.bodies));
             return ss.bodies.Count > 0;
         }
 
@@ -366,9 +367,9 @@ namespace Achievements
                             break;
                     }
                     if (!b)
-                        Log.info("flatten.  Missing body: " + bs);
+                        Log.Info("flatten.  Missing body: " + bs);
                     else
-                        Log.info("flatten: Adding new body range to result: " + bs);
+                        Log.Info("flatten: Adding new body range to result: " + bs);
 
                 }
             }
@@ -422,17 +423,17 @@ namespace Achievements
 
 
 #if false
-                Log.info("Allbodies dump=================================================");
+                Log.Info("Allbodies dump=================================================");
                 foreach (var b in AllBodies)
-                    Log.info(b.ToString());
+                    Log.Info(b.ToString());
 
-                Log.info("allSurfaceSamples dump=================================================");
+                Log.Info("allSurfaceSamples dump=================================================");
 #endif
 
                 foreach (var a in allSurfaceSamples)
                 {
                     var ass = a.Value;
-                    Log.info(a.ToString());
+                    Log.Info(a.ToString());
                     if (ass.individual)
                     {
                         foreach (var f in ass.bodies)
@@ -467,26 +468,26 @@ namespace Achievements
 
 
 #if false
-                Log.info("allOrbitAchievements dump=================================================");
+                Log.Info("allOrbitAchievements dump=================================================");
 #endif
                 foreach (var a in allOrbitAchievements)
                 {
-                    //Log.info(a.ToString());
+                    //Log.Info(a.ToString());
 
                     OrbitAchievement aoa = a.Value;
                     if (aoa.individual)
                     {
-                        Log.info("OrbitAchievement, key: " + a.Key);
+                        Log.Info("OrbitAchievement, key: " + a.Key);
                         foreach (string f in aoa.bodies)
                         {
-                            Log.info("OrbitAchievement, key: " + a.Key + ", body: " + f);
+                            Log.Info("OrbitAchievement, key: " + a.Key + ", body: " + f);
                             if (Body.allBodiesDict.ContainsKey(f))
                             {
                                 var body = Body.allBodiesDict[f];
                                 List<Body> bodiesList = new List<Body>();
 
                                 bodiesList.Add(body);
-                                Log.info("Adding existing body to allOrbitAchievements: " + body.name);
+                                Log.Info("Adding existing body to allOrbitAchievements: " + body.name);
                                 loadedOrbitAchievements.Add(
                                  new SpecifiedOrbitAchievement(
                                      bodiesList,
@@ -523,20 +524,20 @@ namespace Achievements
                     }
                 }
 #if false
-                Log.info("allLocations dump=================================================");
+                Log.Info("allLocations dump=================================================");
                 foreach (var l in allLocations)
                 {
-                    Log.info(l.ToString());
+                    Log.Info(l.ToString());
                 }
-                Log.info("allLandings dump=================================================");
+                Log.Info("allLandings dump=================================================");
 #endif
                 foreach (var l in allLandings)
                 {
-                    Log.info(l.Value.ToString());
+                    Log.Info(l.Value.ToString());
                     Landing landing = l.Value;
 #if false
                     foreach (CfgLocation ll in al.locations)
-                        Log.info("BodyLanding.location: " + ll.ToString());
+                        Log.Info("BodyLanding.location: " + ll.ToString());
 #endif
                     if (landing.locations.Count > 0)
                     {
@@ -566,12 +567,12 @@ namespace Achievements
                     }
                 }
 #if false
-                Log.info("End dump=================================================");
+                Log.Info("End dump=================================================");
 #endif
             }
-            Log.info("Total new body achievements loaded from cfg: " + loadedSurfaceSampleAchievements.Count());
-            Log.info("Total new orbit achievements loaded from cfg: " + loadedOrbitAchievements.Count());
-            Log.info("Total new landing achievements loaded from cfg: " + loadedLandingAchievements.Count());
+            Log.Info("Total new body achievements loaded from cfg: " + loadedSurfaceSampleAchievements.Count());
+            Log.Info("Total new orbit achievements loaded from cfg: " + loadedOrbitAchievements.Count());
+            Log.Info("Total new landing achievements loaded from cfg: " + loadedLandingAchievements.Count());
 
             var achievementList = (List<Achievement>)EarnedAchievements.instance.achievements[Category.RESEARCH_AND_DEVELOPMENT];
             achievementList.AddRange(loadedSurfaceSampleAchievements);
@@ -640,7 +641,7 @@ namespace Achievements
                                     ss.locations.Add(allLocations[l]);
                                 }
                                 else
-                                    Log.error("Missing location: " + l);
+                                    Log.Error("Missing location: " + l);
                             }
                         }
                         allLandings.Add(key, ss);
@@ -737,7 +738,7 @@ namespace Achievements
                             allLocations.Add(name, location);
                         }
                         else
-                            Log.error("No valid locations found for LANDING");
+                            Log.Error("No valid locations found for LANDING");
                     }
 
                 }
@@ -756,7 +757,7 @@ namespace Achievements
                     node.TryGetValue("bodies", ref bodies))
                 {
                     OrbitAchievement ss = new OrbitAchievement(key, title, text);
-                    Log.info("GetAllOrbitAchievements, bodies: " + bodies);
+                    Log.Info("GetAllOrbitAchievements, bodies: " + bodies);
                     if (AddBodiesTo(ss, bodies))
                     {
                         string b = "any";

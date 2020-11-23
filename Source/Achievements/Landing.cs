@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using static Achievements.Achievements;
+
 
 namespace Achievements
 {
@@ -140,27 +142,27 @@ namespace Achievements
                 {
                     flyingStep = !vessel.isOnSurface();
                 }
-                Log.info("flyingStep: " + flyingStep);
+                Log.Info("flyingStep: " + flyingStep);
 
                 if (!stableOrbitStep)
                 {
                     stableOrbitStep = !stableOrbit || vessel.isInStableOrbit();
                 }
-                Log.info("stableOrbitStep: " + stableOrbitStep);
+                Log.Info("stableOrbitStep: " + stableOrbitStep);
 
                 if (!minAltitudeStep)
                 {
                     minAltitudeStep = (minAltitude < 0) || (vessel.altitude >= minAltitude);
                 }
-                Log.info("minAltitudeStep: " + minAltitudeStep);
+                Log.Info("minAltitudeStep: " + minAltitudeStep);
                 return flyingStep && stableOrbitStep && minAltitudeStep && vessel.isOnSurface() && (vessel.horizontalSrfSpeed < 1d);
             }
             else
             {
                 if (vessel != null)
-                    Log.info("vessel.isEVA");
+                    Log.Info("vessel.isEVA");
                 else
-                    Log.info("vessel is null");
+                    Log.Info("vessel is null");
                 return false;
             }
         }

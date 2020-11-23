@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static Achievements.Achievements;
 
 namespace Achievements
 {
@@ -80,7 +81,7 @@ namespace Achievements
 
         internal bool isAtLocation(Vessel vessel)
         {
-            Log.info("isAtLocation: currentBody: " + vessel.getCurrentBody().name + ", body.name: " + body.name);
+            Log.Info("isAtLocation: currentBody: " + vessel.getCurrentBody().name + ", body.name: " + body.name);
             if (vessel.getCurrentBody().Equals(body))
             //if (vessel.getCurrentBody().name == body.name)
             {
