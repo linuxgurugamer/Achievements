@@ -279,7 +279,7 @@ namespace Achievements
                     queuedEarnedAchievements.Remove(achievement.getKey());
                     //if (EarnedAchievements.instance.earnedAchievements.ContainsKey(achievement))
                     toast = null;
-                    bool found = false;
+                    //bool found = false;
                     foreach (var e in EarnedAchievements.instance.earnedAchievements)
                     {
                         if (e.Key == achievement.getKey())
@@ -287,7 +287,7 @@ namespace Achievements
                             toast = new Toast(achievement, e.Value);
                             playAchievementEarnedClip();
                             awardReputation(achievement);
-                            found = true;
+                            //found = true;
                             break;
                         }
                     }

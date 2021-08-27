@@ -24,7 +24,7 @@ using UnityEngine;
 namespace Achievements {
 	internal class Toast {
 		//private const long SHOW_TIMEOUT = 10000;
-		private long SHOW_TIMEOUT = 10000;
+		//private long SHOW_TIMEOUT = 10000;
 		private const int NAV_BALL_HEIGHT = 189;
 
 		private Achievement achievement;
