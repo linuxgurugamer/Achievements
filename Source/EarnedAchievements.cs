@@ -128,6 +128,8 @@ namespace Achievements
 
                 earnedAchievements = loadEarnedAchievements(node);
             }
+            else
+                earnedAchievements = new Dictionary<string, AchievementEarn>();
 #if false
             Log.Info("Achievement Dump Start");
             int cat = 0, cnt = 0;
