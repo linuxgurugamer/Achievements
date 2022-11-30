@@ -84,17 +84,17 @@ namespace Achievements {
 			toastAddonNotEarnedTex = new Texture2D(2, 2);
 			toastExpandedTex = new Texture2D(2, 2);
 			toastAddonExpandedTex = new Texture2D(2, 2);
-			if (!ToolbarControl.LoadImageFromFile(ref toastTex, "GameData/Achievements/PluginData/Textures/toast"))
+			if (!ToolbarControl.LoadImageFromFile(ref toastTex, KSPUtil.ApplicationRootPath+"GameData/Achievements/PluginData/Textures/toast"))
 				Log.Error("Unable to load toast from file");
-			if (!ToolbarControl.LoadImageFromFile(ref toastNotEarnedTex, "GameData/Achievements/PluginData/Textures/toast-not-earned"))
+			if (!ToolbarControl.LoadImageFromFile(ref toastNotEarnedTex, KSPUtil.ApplicationRootPath + "GameData/Achievements/PluginData/Textures/toast-not-earned"))
 				Log.Error("Unable to load toast-not-earned from file");
-			if (!ToolbarControl.LoadImageFromFile(ref toastAddonTex, "GameData/Achievements/PluginData/Textures/toast-addon"))
+			if (!ToolbarControl.LoadImageFromFile(ref toastAddonTex, KSPUtil.ApplicationRootPath + "GameData/Achievements/PluginData/Textures/toast-addon"))
 				Log.Error("Unable to load toast-addon from file");
-			if (!ToolbarControl.LoadImageFromFile(ref toastAddonNotEarnedTex, "GameData/Achievements/PluginData/Textures/toast-addon-not-earned"))
+			if (!ToolbarControl.LoadImageFromFile(ref toastAddonNotEarnedTex, KSPUtil.ApplicationRootPath + "GameData/Achievements/PluginData/Textures/toast-addon-not-earned"))
 				Log.Error("Unable to load toast-addon-not-earned from file");
-			if (!ToolbarControl.LoadImageFromFile(ref toastExpandedTex, "GameData/Achievements/PluginData/Textures/toast-expanded"))
+			if (!ToolbarControl.LoadImageFromFile(ref toastExpandedTex, KSPUtil.ApplicationRootPath + "GameData/Achievements/PluginData/Textures/toast-expanded"))
 				Log.Error("Unable to load toast-expanded from file");
-			if (!ToolbarControl.LoadImageFromFile(ref toastAddonExpandedTex, "GameData/Achievements/PluginData/Textures/toast-addon-expanded"))
+			if (!ToolbarControl.LoadImageFromFile(ref toastAddonExpandedTex, KSPUtil.ApplicationRootPath + "GameData/Achievements/PluginData/Textures/toast-addon-expanded"))
 				Log.Error("Unable to load toast-addon-expanded from file");
 			int width = TEX_WIDTH + 300;
 			int height = Screen.height / 2;

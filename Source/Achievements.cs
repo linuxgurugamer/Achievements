@@ -120,7 +120,7 @@ namespace Achievements
         public void LoadTextures()
         {
             AchieveButton = new Texture2D(2, 2);
-            if (!ToolbarControl.LoadImageFromFile(ref AchieveButton, "GameData/Achievements/PluginData/Textures/AchievmentTrophyButton"))
+            if (!ToolbarControl.LoadImageFromFile(ref AchieveButton, KSPUtil.ApplicationRootPath + "GameData/Achievements/PluginData/Textures/AchievmentTrophyButton"))
                 Log.Error("Unable to load AchievmentTrophyButton from file");
         }
 

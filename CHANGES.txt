@@ -1,5 +1,11 @@
 ﻿ChangeLog
 
+1.10.1.8
+    Fixed path for loading images (broken by new launcher)
+
+1.10.1.7
+    Fixed path for loading images (was relative, broken by new launcher)
+
 1.10.1.6
     Fixed missing initialization of earnedAchievements if there were no achievements to load
 
