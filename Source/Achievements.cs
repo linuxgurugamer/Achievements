@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -86,14 +87,14 @@ namespace Achievements
         public void Start()
         {
 #if DEBUg
-            Log = new KSP_Log.Log("Achievements", KSP_Log.Log.LEVEL.INFO);
+            Log = new KSP_Log.Log(Localizer.Format("#LOC_Ach_2"), KSP_Log.Log.LEVEL.INFO);
 #else
-            Log = new KSP_Log.Log("Achievements", KSP_Log.Log.LEVEL.ERROR);
+            Log = new KSP_Log.Log(Localizer.Format("#LOC_Ach_2"), KSP_Log.Log.LEVEL.ERROR);
 #endif
             Log.Info("Achievements.Start");
             fetch = this;
 
-            achievementEarnedClip = GameDatabase.Instance.GetAudioClip("Achievements/achievement");
+            achievementEarnedClip = GameDatabase.Instance.GetAudioClip(Localizer.Format("#LOC_Ach_3"));
             achievementEarnedAudioSource = gameObject.AddComponent<AudioSource>();
 
             achievementEarnedAudioSource.clip = achievementEarnedClip;
@@ -109,7 +110,7 @@ namespace Achievements
 
             GameEvents.onShowUI.Add(onShowUI);
             GameEvents.onHideUI.Add(onHideUI);
-            StartCoroutine("SlowUpdate");
+            StartCoroutine(Localizer.Format("#LOC_Ach_4"));
             DontDestroyOnLoad(this);
         }
         public void Awake()
@@ -131,18 +132,19 @@ namespace Achievements
             if (toolbarControl == null)
             {
                 toolbarControl = gameObject.AddComponent<ToolbarControl>();
-
+                #region NO_LOCALIZATION
                 toolbarControl.AddToAllToolbars(this.AchieveButtonOn, this.AchievButtonOff,
                     ApplicationLauncher.AppScenes.SPACECENTER | ApplicationLauncher.AppScenes.FLIGHT,
-                    MODID,
+                    MODID,  
                     "achButton",
                     "Achievements/PluginData/Textures/button-normal-38",
                     "Achievements/PluginData/Textures/button-normal-24",
                     MODNAME
                 );
+                #endregion
 
             }
-            else { Log.Debug("achievment CreateButtons Failed"); }
+            else { Log.Debug(Localizer.Format("#LOC_Ach_5")); }
         }
         private void AchieveButtonOn()
         {
@@ -173,7 +175,7 @@ namespace Achievements
             DestroyButtons();
             GameEvents.onShowUI.Remove(onShowUI);
             GameEvents.onHideUI.Remove(onHideUI);
-            StopCoroutine("SlowUpdate");
+            StopCoroutine(Localizer.Format("#LOC_Ach_4"));
         }
 
         IEnumerator SlowUpdate()
@@ -194,7 +196,7 @@ namespace Achievements
             // were initialized at the compile time
             if (EarnedAchievements.instance != null && EarnedAchievements.instance.allAchievementsCreated)
             {
-                if (SpaceTuxUtility.HasMod.hasMod("KRASH"))
+                if (SpaceTuxUtility.HasMod.hasMod(Localizer.Format("#LOC_Ach_6")))
                 {
                     //Log.Info("KRASH found");
                     if (KRASH_Interface.KRASH_Active())
@@ -356,7 +358,7 @@ namespace Achievements
         {
             GUI.depth = -100;
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(new Vector3(0, 0, -90)), Vector3.one);
-            if (GUI.Button(new Rect(-700, Screen.width - 25, 120, 25), "Location"))
+            if (GUI.Button(new Rect(-700, Screen.width - 25, 120, 25), Localizer.Format("#LOC_Ach_7")))
             {
                 toggleLocationPicker();
             }

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,51 +43,51 @@ namespace Achievements
     {
 #if false
 		private static  readonly string[] STOCK_TECH_IDS = new string[] {
-			"start",
-			"basicRocketry",
-			"survivability",
-			"stability",
-			"generalRocketry",
-			"scienceTech",
-			"flightControl",
-			"generalConstruction",
-			"advRocketry",
-			"landing",
-			"spaceExploration",
-			"electrics",
-			"aerodynamicSystems",
-			"advFlightControl",
-			"advConstruction",
-			"fuelSystems",
-			"heavyRocketry",
-			"advLanding",
-			"advExploration",
-			"advElectrics",
-			"precisionEngineering",
-			"supersonicFlight",
-			"specializedConstruction",
-			"specializedControl",
-			"heavierRocketry",
-			"fieldScience",
-			"electronics",
-			"largeElectrics",
-			"ionPropulsion",
-			"unmannedTech",
-			"highAltitudeFlight",
-			"advMetalworks",
-			"advAerodynamics",
-			"largeControl",
-			"nuclearPropulsion",
-			"advancedMotors",
-			"advScienceTech",
-			"specializedElectrics",
-			"actuators",
-			"advUnmanned",
-			"hypersonicFlight",
-			"heavyAerodynamics",
-			"composites",
-			"metaMaterials",
-			"veryHeavyRocketry"
+			Localizer.Format("#LOC_Ach_323"),
+			Localizer.Format("#LOC_Ach_324"),
+			Localizer.Format("#LOC_Ach_325"),
+			Localizer.Format("#LOC_Ach_326"),
+			Localizer.Format("#LOC_Ach_327"),
+			Localizer.Format("#LOC_Ach_328"),
+			Localizer.Format("#LOC_Ach_329"),
+			Localizer.Format("#LOC_Ach_330"),
+			Localizer.Format("#LOC_Ach_331"),
+			Localizer.Format("#LOC_Ach_259"),
+			Localizer.Format("#LOC_Ach_332"),
+			Localizer.Format("#LOC_Ach_333"),
+			Localizer.Format("#LOC_Ach_334"),
+			Localizer.Format("#LOC_Ach_335"),
+			Localizer.Format("#LOC_Ach_336"),
+			Localizer.Format("#LOC_Ach_337"),
+			Localizer.Format("#LOC_Ach_338"),
+			Localizer.Format("#LOC_Ach_339"),
+			Localizer.Format("#LOC_Ach_340"),
+			Localizer.Format("#LOC_Ach_341"),
+			Localizer.Format("#LOC_Ach_342"),
+			Localizer.Format("#LOC_Ach_343"),
+			Localizer.Format("#LOC_Ach_344"),
+			Localizer.Format("#LOC_Ach_345"),
+			Localizer.Format("#LOC_Ach_346"),
+			Localizer.Format("#LOC_Ach_347"),
+			Localizer.Format("#LOC_Ach_348"),
+			Localizer.Format("#LOC_Ach_349"),
+			Localizer.Format("#LOC_Ach_350"),
+			Localizer.Format("#LOC_Ach_351"),
+			Localizer.Format("#LOC_Ach_352"),
+			Localizer.Format("#LOC_Ach_353"),
+			Localizer.Format("#LOC_Ach_354"),
+			Localizer.Format("#LOC_Ach_355"),
+			Localizer.Format("#LOC_Ach_356"),
+			Localizer.Format("#LOC_Ach_357"),
+			Localizer.Format("#LOC_Ach_358"),
+			Localizer.Format("#LOC_Ach_359"),
+			Localizer.Format("#LOC_Ach_360"),
+			Localizer.Format("#LOC_Ach_361"),
+			Localizer.Format("#LOC_Ach_362"),
+			Localizer.Format("#LOC_Ach_363"),
+			Localizer.Format("#LOC_Ach_364"),
+			Localizer.Format("#LOC_Ach_365"),
+			Localizer.Format("#LOC_Ach_366")
 		};
 #endif
         private static string[] TECH_IDS;
@@ -150,17 +151,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Apes Can't Do That";
+            return Localizer.Format("#LOC_Ach_367");
         }
 
         public override string getText()
         {
-            return "Unlock all nodes of the technology tree.";
+            return Localizer.Format("#LOC_Ach_368");
         }
 
         public override string getKey()
         {
-            return "allTechsResearched";
+            return Localizer.Format("#LOC_Ach_369");
         }
     }
 }

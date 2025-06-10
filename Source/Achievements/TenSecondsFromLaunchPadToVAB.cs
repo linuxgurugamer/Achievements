@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,15 +79,15 @@ namespace Achievements {
 		}
 
 		public override string getTitle() {
-			return "Rapid Relocation";
+			return Localizer.Format("#LOC_Ach_370");
 		}
 
 		public override string getText() {
-			return "Launch a Kerbal from the launch pad and land him safely on the helicopter pad in under 10 s.";
+			return Localizer.Format("#LOC_Ach_371");
 		}
 
 		public override string getKey() {
-			return "landing.kscHelicopterPad.underTenSeconds";
+			return Localizer.Format("#LOC_Ach_372");
 		}
 	}
 }

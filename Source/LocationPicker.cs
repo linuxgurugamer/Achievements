@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +35,8 @@ namespace Achievements {
 		internal LocationPicker() {
 			RenderingManager.AddToPostDrawQueue(1, doCoordinatePicking);
 
-			infoWindow = new InfoWindow("Location");
-			infoWindow.text = "Pick location on map.";
+			infoWindow = new InfoWindow(Localizer.Format("#LOC_Ach_7"));
+			infoWindow.text = Localizer.Format("#LOC_Ach_51");
 			infoWindow.closeCallback = () => {
 				close();
 			};
@@ -57,6 +58,7 @@ namespace Achievements {
 		internal void draw() {
 			infoWindow.draw();
 		}
+        #region NO_LOCALIZATION
 
 		private void infoWindowGUI() {
 			GUILayout.BeginVertical(GUILayout.ExpandWidth(true));
@@ -94,7 +96,7 @@ namespace Achievements {
 				double distance = getDistance(this.coords, mouseCoords, body);
 				infoWindow.text = this.coords.ToStringDecimal() + "\nDistance: " + distance.ToString("F1") + " m";
 			}
-
+#endregion
 			if (mouseCoords != null) {
 				GLUtils.DrawMapViewGroundMarker(body, mouseCoords.latitude, mouseCoords.longitude, body.Radius / 15, Color.yellow);
 

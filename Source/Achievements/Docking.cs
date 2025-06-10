@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace Achievements {
 		public IEnumerable<Achievement> getAchievements() {
 			return new Achievement[] {
 				new Docking(Docking.Mode.ORBIT, (action) => action.from.isDockingPort() && action.to.isDockingPort(),
-					"We're Meant to Be Together", "Perform a docking maneuver in orbit.", "docking.orbit"),
+					Localizer.Format("#LOC_Ach_123"), Localizer.Format("#LOC_Ach_124"), Localizer.Format("#LOC_Ach_125")),
 				new Docking(Docking.Mode.ANY, (action) => action.from.isAsteroid() || action.to.isAsteroid(),
-					"Rock Collector", "Grab an asteroid.", "docking.asteroid")
+					Localizer.Format("#LOC_Ach_126"), Localizer.Format("#LOC_Ach_127"), Localizer.Format("#LOC_Ach_128"))
 				
 			};
 		}
@@ -42,7 +43,7 @@ namespace Achievements {
 		public IEnumerable<Achievement> getAchievements() {
 			return new Achievement[] {
 				new Docking(Docking.Mode.SURFACE, (action) => action.from.isDockingPort() && action.to.isDockingPort(),
-					"Base Builder", "Perform a docking maneuver on the surface of another planet or moon.", "docking.surface")
+					Localizer.Format("#LOC_Ach_129"), Localizer.Format("#LOC_Ach_130"), Localizer.Format("#LOC_Ach_131"))
 			};
 		}
 

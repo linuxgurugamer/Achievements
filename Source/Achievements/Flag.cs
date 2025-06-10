@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Achievements {
 		public IEnumerable<Achievement> getAchievements() {
 			return new Achievement[] {
 				new ExtraKerbalFlag(),
-				new AllBodiesFlags(Body.ALL_LANDABLE, "All Your Base Are Belong to Us", "Plant a flag on every planet and moon.", "landing.allBodiesFlags"),
+				new AllBodiesFlags(Body.ALL_LANDABLE, Localizer.Format("#LOC_Ach_171"), Localizer.Format("#LOC_Ach_172"), Localizer.Format("#LOC_Ach_173")),
 			};
 		}
 
@@ -49,15 +50,15 @@ namespace Achievements {
 		}
 
 		public override string getTitle() {
-			return "I Claim This World in the Name Of";
+			return Localizer.Format("#LOC_Ach_174");
 		}
 
 		public override string getText() {
-			return "Plant a flag on another planet.";
+			return Localizer.Format("#LOC_Ach_175");
 		}
 
 		public override string getKey() {
-			return "landing.extraKerbalFlag";
+			return Localizer.Format("#LOC_Ach_176");
 		}
 	}
 

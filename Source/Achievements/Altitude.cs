@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,15 +51,15 @@ namespace Achievements
                     }
                 }
             }
-            aboveAtmList.Add((Achievement)(new Altitude("I'm Flying!", "Fly up to an altitude of 10000 m above the surface of Kerbin.", "flight.altitude." + Body.KERBIN.name + ".10000", Body.KERBIN, 10000d, 11000d)));
-            aboveAtmList.Add((Achievement)(new Altitude("Sunburn", "Get within a distance of 1000 km to the Sun.", "flight.altitude." + Body.SUN.name + ".1000000", Body.SUN, 0d, 1000000d, false)));
+            aboveAtmList.Add((Achievement)(new Altitude(Localizer.Format("#LOC_Ach_86"), Localizer.Format("#LOC_Ach_87"), Localizer.Format("#LOC_Ach_88") + Body.KERBIN.name + ".10000", Body.KERBIN, 10000d, 11000d)));
+            aboveAtmList.Add((Achievement)(new Altitude(Localizer.Format("#LOC_Ach_89"), Localizer.Format("#LOC_Ach_90"), Localizer.Format("#LOC_Ach_88") + Body.SUN.name + ".1000000", Body.SUN, 0d, 1000000d, false)));
 
             return aboveAtmList.ToArray();
 #if false
             return new Achievement[] {
-                new Altitude("I'm Flying!", "Fly up to an altitude of 10000 m above the surface of Kerbin.", "flight.altitude." + Body.KERBIN.name + ".10000",
+                new Altitude(Localizer.Format("#LOC_Ach_86"), Localizer.Format("#LOC_Ach_87"), Localizer.Format("#LOC_Ach_88") + Body.KERBIN.name + ".10000",
                     Body.KERBIN, 10000d, 11000d),
-                new Altitude("Sunburn", "Get within a distance of 1000 km to the Sun.", "flight.altitude." + Body.SUN.name + ".1000000",
+                new Altitude(Localizer.Format("#LOC_Ach_89"), Localizer.Format("#LOC_Ach_90"), Localizer.Format("#LOC_Ach_88") + Body.SUN.name + ".1000000",
                     Body.SUN, 0d, 1000000d, false),
 
                 new AboveAtmosphere(Body.EVE, 96708d, 97708d),
@@ -147,8 +148,8 @@ namespace Achievements
     internal class AboveAtmosphere : Altitude
     {
         internal AboveAtmosphere(Body body, double minAltitude, double maxAltitude)
-            : base("The Air Is Getting Thin Up Here - " + body.name,
-                "Fly above the atmosphere of " + body.theName, "flight.aboveAtmosphere." + body.name,
+            : base(Localizer.Format("#LOC_Ach_91") + body.name,
+                Localizer.Format("#LOC_Ach_92") + body.theName, Localizer.Format("#LOC_Ach_93") + body.name,
                 body, minAltitude, maxAltitude)
         {
         }

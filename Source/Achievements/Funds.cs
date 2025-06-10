@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber && Danny Moffre
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace Achievements
         public IEnumerable<Achievement> getAchievements()
         {
             return new Achievement[] {
-				new FundsAllocations("Going Places", "Collect 100,000 Funds", "Collect.Funds.100000",100000.00),
-                new FundsAllocations("Mile High Club","Collect 1,000,000 Funds", "Collect.Funds.1000000",1000000.00),
-                new FundsAllocations("Capitalist Monopoly","Collect 10,000,000 Funds","Collect.Funds.10000000",10000000.00),
+				new FundsAllocations(Localizer.Format("#LOC_Ach_177"), Localizer.Format("#LOC_Ach_178"), Localizer.Format("#LOC_Ach_179"),100000.00),
+                new FundsAllocations(Localizer.Format("#LOC_Ach_180"),Localizer.Format("#LOC_Ach_181"), Localizer.Format("#LOC_Ach_182"),1000000.00),
+                new FundsAllocations(Localizer.Format("#LOC_Ach_183"),Localizer.Format("#LOC_Ach_184"),Localizer.Format("#LOC_Ach_185"),10000000.00),
 			};
         }
 

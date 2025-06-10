@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,13 +37,13 @@ namespace Achievements {
 
 	internal class KSCBuildingCrash : AchievementBase {
 		private static IEnumerable<string> BUILDING_NAMES = new string[] {
-			"Space Plane Hangar",
-			"Vehicle Assembly Building",
-			"TrackingStationOffice",
-			"Satellite Dish",
-			"Mission Control",
-			"Astronaunt Complex Building", // sic 0.21.1
-			"Astronaut Complex Building" // anticipate forward compatibility
+			Localizer.Format("#LOC_Ach_113"),
+			Localizer.Format("#LOC_Ach_114"),
+			Localizer.Format("#LOC_Ach_115"),
+			Localizer.Format("#LOC_Ach_116"),
+			Localizer.Format("#LOC_Ach_117"),
+			Localizer.Format("#LOC_Ach_118"), // sic 0.21.1
+			Localizer.Format("#LOC_Ach_119") // anticipate forward compatibility
 		};
 
 		private bool crashStep;
@@ -67,15 +68,15 @@ namespace Achievements {
 		}
 
 		public override string getTitle() {
-			return "Buzzing the Tower";
+			return Localizer.Format("#LOC_Ach_120");
 		}
 
 		public override string getText() {
-			return "Crash into a building at the Kerbal Space Center.";
+			return Localizer.Format("#LOC_Ach_121");
 		}
 
 		public override string getKey() {
-			return "crash.kscBuilding";
+			return Localizer.Format("#LOC_Ach_122");
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,12 +72,14 @@ namespace Achievements {
 			// achievements from other assemblies are always addons
 			addon = achievement.isAddon() || !achievement.GetType().Assembly.Equals(typeof(Achievements).Assembly);
 #if false
+#region NO_LOCALIZATION
 		    toastTex = GameDatabase.Instance.GetTexture("Achievements/toast", false);
 			toastNotEarnedTex = GameDatabase.Instance.GetTexture("Achievements/toast-not-earned", false);
 			toastAddonTex = GameDatabase.Instance.GetTexture("Achievements/toast-addon", false);
 			toastAddonNotEarnedTex = GameDatabase.Instance.GetTexture("Achievements/toast-addon-not-earned", false);
 			toastExpandedTex = GameDatabase.Instance.GetTexture("Achievements/toast-expanded", false);
 			toastAddonExpandedTex = GameDatabase.Instance.GetTexture("Achievements/toast-addon-expanded", false);            
+#endregion
 #endif
 			toastTex = new Texture2D(2, 2);
 			toastNotEarnedTex = new Texture2D(2, 2);
@@ -180,9 +183,11 @@ namespace Achievements {
 				if (minRequired > 1) {
 					// clamp to minRequired
 					int count = Math.Min(((CountingAchievement) achievement).getCount(), minRequired);
-					text += " (" + count.ToString("D0") + "/" + minRequired.ToString("D0") + ")";
-				}
-			}
+                    #region NO_LOCALIZATION
+                    text += " (" + count.ToString("D0") + "/" + minRequired.ToString("D0") + ")";
+                    #endregion
+                }
+            }
 			GUILayout.Label(text, (earn != null) ? textStyle : textNotEarnedStyle, GUILayout.Width(TEX_WIDTH), GUILayout.ExpandWidth(true));
 			GUILayout.FlexibleSpace();
 			GUILayout.EndVertical();
@@ -192,7 +197,7 @@ namespace Achievements {
 				GUILayout.FlexibleSpace();
 				GUILayout.BeginHorizontal(GUIStyle.none);
 				GUILayout.Space(EXPANDED_INSET);
-				string flightName = (earn.flightName == Achievements.UNKNOWN_VESSEL) ? "Unknown vessel" : earn.flightName;
+				string flightName = (earn.flightName == Achievements.UNKNOWN_VESSEL) ? Localizer.Format("#LOC_Ach_1") : earn.flightName;
 				string date = new DateTime(earn.time * 10000).ToShortDateString();
 				GUILayout.Label(flightName + ", " + date, textExpansionStyle, GUILayout.Width(TEX_WIDTH - EXPANDED_INSET), GUILayout.ExpandWidth(true));
 				GUILayout.EndHorizontal();

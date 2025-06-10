@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		buildRelease.bat = buildRelease.bat
 		CHANGES.txt = CHANGES.txt
 		deploy.bat = deploy.bat
+		GameData\Achievements\Localization\en-us.cfg = GameData\Achievements\Localization\en-us.cfg
 		jenkins.txt = jenkins.txt
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md

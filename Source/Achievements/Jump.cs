@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,15 +73,20 @@ namespace Achievements {
 		}
 
 		public override string getTitle() {
-			return "Space Dunk";
+			return Localizer.Format("#LOC_Ach_189");
 		}
 
-		public override string getText() {
-			return "Jump " + MIN_HEIGHT.ToString("F0") + " m high above the surface of a celestial body without using the jet pack.";
+		// This is here to avoid having crazy code to avoid localization in the getText and getKey methods below
+        #region NO_LOCALIZATION
+        const string F0 = "F0";
+        #endregion
+
+        public override string getText() {
+			return Localizer.Format("#LOC_Ach_190") + MIN_HEIGHT.ToString(F0) + Localizer.Format("#LOC_Ach_191");
 		}
 
 		public override string getKey() {
-			return "eva.jump." + MIN_HEIGHT.ToString("F0");
+			return Localizer.Format("#LOC_Ach_192") + MIN_HEIGHT.ToString(F0);
 		}
 	}
 }

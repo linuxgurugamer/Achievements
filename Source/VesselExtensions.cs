@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,11 +89,11 @@ namespace Achievements {
 		}
 
 		internal static bool hasSurfaceSample(this Vessel vessel) {
-			return vessel.hasScienceExperiment("surfaceSample");
+			return vessel.hasScienceExperiment(Localizer.Format("#LOC_Ach_54"));
 		}
 
 		internal static bool hasAsteroidSample(this Vessel vessel) {
-			return vessel.hasScienceExperiment("asteroidSample");
+			return vessel.hasScienceExperiment(Localizer.Format("#LOC_Ach_55"));
 		}
 
 		private static bool hasScienceExperiment(this Vessel vessel, string experimentId) {

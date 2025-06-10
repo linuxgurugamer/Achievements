@@ -1,4 +1,5 @@
-﻿using System;
+using KSP.Localization;
+using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -181,12 +182,12 @@ namespace Achievements
             public override string ToString()
             {
                 return key + ", " + title + ", " + text + ": " + bodies.ToString() +
-                    ", minAltitude: " + minAltitude +
-                    ", maxAltitude: " + maxAltitude +
-                    ", minEccentricity: " + minEccentricity +
-                    ", maxEccentricity: " + maxEccentricity +
-                    ", minInclination: " + minInclination +
-                    ", maxInclination: " + maxInclination
+                    Localizer.Format("#LOC_Ach_56") + minAltitude +
+                    Localizer.Format("#LOC_Ach_57") + maxAltitude +
+                    Localizer.Format("#LOC_Ach_58") + minEccentricity +
+                    Localizer.Format("#LOC_Ach_59") + maxEccentricity +
+                    Localizer.Format("#LOC_Ach_60") + minInclination +
+                    Localizer.Format("#LOC_Ach_61") + maxInclination
                 ;
 
             }
@@ -223,11 +224,11 @@ namespace Achievements
                 foreach (var b in bodies)
                     s += b + ", ";
                 return name + ", " + s +
-                    ", latitude: " + latitude +
-                    ", longitude: " + longitude +
-                    ", latitude2: " + latitude2 +
-                    ", longitude2: " + longitude2 +
-                    ", radius: " + radius;
+                    Localizer.Format("#LOC_Ach_62") + latitude +
+                    Localizer.Format("#LOC_Ach_63") + longitude +
+                    Localizer.Format("#LOC_Ach_64") + latitude2 +
+                    Localizer.Format("#LOC_Ach_65") + longitude2 +
+                    Localizer.Format("#LOC_Ach_48") + radius;
             }
         }
 
@@ -265,11 +266,11 @@ namespace Achievements
             public override string ToString()
             {
                 return key + ", " + title + ", " + text + ": " + bodies.ToString() +
-                    ", splash: " + splash +
-                    ", stableOrbit: " + stableOrbit +
-                    ", minAltitude: " + minAltitude +
-                    ", maxDegreesLatitudeFromEquator: " + maxDegreesLatitudeFromEquator +
-                    ", locations: " + locations.ToString();
+                    Localizer.Format("#LOC_Ach_66") + splash +
+                    Localizer.Format("#LOC_Ach_67") + stableOrbit +
+                    Localizer.Format("#LOC_Ach_56") + minAltitude +
+                    Localizer.Format("#LOC_Ach_68") + maxDegreesLatitudeFromEquator +
+                    Localizer.Format("#LOC_Ach_69") + locations.ToString();
             }
         }
 
@@ -289,15 +290,15 @@ namespace Achievements
 
         void AddPredefined()
         {
-            AllBodies.Add("STOCK_ALL", new Bodies("STOCK_ALL", "STOCK_ALL"));
-            AllBodies.Add("STOCK_LANDABLE", new Bodies("STOCK_LANDABLE", "STOCK_LANDABLE"));
-            AllBodies.Add("ALL_PLANETS", new Bodies("ALL_PLANETS", "ALL_PLANETS"));
-            AllBodies.Add("ALL_PLANETS_WITHOUT_HOMEWORLD", new Bodies("ALL_PLANETS_WITHOUT_HOMEWORLD", "ALL_PLANETS_WITHOUT_HOMEWORLD"));
-            AllBodies.Add("ALL_MOONS", new Bodies("ALL_MOONS", "ALL_MOONS"));
-            AllBodies.Add("ALL_LANDABLE", new Bodies("ALL_LANDABLE", "ALL_LANDABLE"));
-            AllBodies.Add("ALL_NONLANDABLE", new Bodies("ALL_NONLANDABLE", "ALL_NONLANDABLE"));
-            AllBodies.Add("ALL_SPLASHABLE", new Bodies("ALL_SPLASHABLE", "ALL_SPLASHABLE"));
-            AllBodies.Add("ALL_WITH_ATMOSPHERE", new Bodies("ALL_WITH_ATMOSPHERE", "ALL_WITH_ATMOSPHERE"));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_70"), new Bodies(Localizer.Format("#LOC_Ach_70"), Localizer.Format("#LOC_Ach_70")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_71"), new Bodies(Localizer.Format("#LOC_Ach_71"), Localizer.Format("#LOC_Ach_71")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_72"), new Bodies(Localizer.Format("#LOC_Ach_72"), Localizer.Format("#LOC_Ach_72")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_73"), new Bodies(Localizer.Format("#LOC_Ach_73"), Localizer.Format("#LOC_Ach_73")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_74"), new Bodies(Localizer.Format("#LOC_Ach_74"), Localizer.Format("#LOC_Ach_74")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_75"), new Bodies(Localizer.Format("#LOC_Ach_75"), Localizer.Format("#LOC_Ach_75")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_76"), new Bodies(Localizer.Format("#LOC_Ach_76"), Localizer.Format("#LOC_Ach_76")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_77"), new Bodies(Localizer.Format("#LOC_Ach_77"), Localizer.Format("#LOC_Ach_77")));
+            AllBodies.Add(Localizer.Format("#LOC_Ach_78"), new Bodies(Localizer.Format("#LOC_Ach_78"), Localizer.Format("#LOC_Ach_78")));
 
             AllBodies.Add(Body.SUN.name, new Bodies(Body.SUN.name, Body.SUN.name));
             AllBodies.Add(Body.MOHO.name, new Bodies(Body.MOHO.name, Body.MOHO.name));
@@ -400,12 +401,12 @@ namespace Achievements
 
         string BodyReplacement(string title, string body)
         {
-            return title.Replace("BODY", body);
+            return title.Replace(Localizer.Format("#LOC_Ach_79"), body);
         }
         internal void LoadCfgAchievements()
         {
             AddPredefined();
-            var achievements = GameDatabase.Instance.GetConfigNodes("ACHIEVEMENTS");
+            var achievements = GameDatabase.Instance.GetConfigNodes(Localizer.Format("#LOC_Ach_80"));
 
             //List<Achievement> loadedAchievements = new List<Achievement>();
             List<Achievement> loadedSurfaceSampleAchievements = new List<Achievement>();
@@ -462,7 +463,7 @@ namespace Achievements
                             new AllBodiesSurfaceSample(f,
                                                         ass.title,
                                                         ass.text,
-                                                        ass.key + ".all").addon());
+                                                        ass.key + Localizer.Format("#LOC_Ach_81")).addon());
                     }
                 }
 
@@ -604,19 +605,19 @@ namespace Achievements
                     Landing ss = new Landing(key, title, text);
                     if (AddBodiesTo(ss, bodies))
                     {
-                        string b = "any";
+                        string b = Localizer.Format("#LOC_Ach_82");
                         node.TryGetValue("bodyRequirement", ref b);
                         if (b != "")
                         {
-                            ss.requireAll = (b.ToLower() == "all");
-                            ss.individual = (b.ToLower() == "individual");
+                            ss.requireAll = (b.ToLower() == Localizer.Format("#LOC_Ach_83"));
+                            ss.individual = (b.ToLower() == Localizer.Format("#LOC_Ach_84"));
                         }
-                        b = "false";
+                        b = Localizer.Format("#LOC_Ach_85");
                         node.TryGetValue("splash", ref b);
                         if (b != "")
                             bool.TryParse(b, out ss.splash);
 
-                        b = "false";
+                        b = Localizer.Format("#LOC_Ach_85");
                         node.TryGetValue("stableOrbit", ref b);
                         if (b != "")
                             bool.TryParse(b, out ss.stableOrbit);
@@ -760,12 +761,12 @@ namespace Achievements
                     Log.Info("GetAllOrbitAchievements, bodies: " + bodies);
                     if (AddBodiesTo(ss, bodies))
                     {
-                        string b = "any";
+                        string b = Localizer.Format("#LOC_Ach_82");
                         node.TryGetValue("bodyRequirement", ref b);
                         if (b != "")
                         {
-                            ss.requireAll = (b.ToLower() == "all");
-                            ss.individual = (b.ToLower() == "individual");
+                            ss.requireAll = (b.ToLower() == Localizer.Format("#LOC_Ach_83"));
+                            ss.individual = (b.ToLower() == Localizer.Format("#LOC_Ach_84"));
                         }
                         if (node.HasValue("minAltitude"))
                         {
@@ -825,12 +826,12 @@ namespace Achievements
                     SurfaceSample ss = new SurfaceSample(key, title, text);
                     if (AddBodiesTo(ss, bodies))
                     {
-                        string b = "any";
+                        string b = Localizer.Format("#LOC_Ach_82");
                         node.TryGetValue("bodyRequirement", ref b);
                         if (b != "")
                         {
-                            ss.requireAll = (b.ToLower() == "all");
-                            ss.individual = (b.ToLower() == "individual");
+                            ss.requireAll = (b.ToLower() == Localizer.Format("#LOC_Ach_83"));
+                            ss.individual = (b.ToLower() == Localizer.Format("#LOC_Ach_84"));
                         }
                         allSurfaceSamples.Add(key, ss);
 

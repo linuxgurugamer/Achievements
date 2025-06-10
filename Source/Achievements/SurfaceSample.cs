@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Achievements
             }
             achievements.AddRange(new Achievement[] {
                 new SurfaceSample(),
-                new AllBodiesSurfaceSample(Body.ALL_LANDABLE, "Pile of Dirt", "Take surface samples on all planets and moons.", "surfaceSample.allBodies"),
+                new AllBodiesSurfaceSample(Body.ALL_LANDABLE, Localizer.Format("#LOC_Ach_313"), Localizer.Format("#LOC_Ach_314"), Localizer.Format("#LOC_Ach_315")),
                 new AsteroidSample()
             });
             return achievements;
@@ -55,17 +56,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Yep, Looks Like Dirt";
+            return Localizer.Format("#LOC_Ach_316");
         }
 
         public override string getText()
         {
-            return "Take a surface sample.";
+            return Localizer.Format("#LOC_Ach_317");
         }
 
         public override string getKey()
         {
-            return "surfaceSample";
+            return Localizer.Format("#LOC_Ach_54");
         }
     }
 
@@ -85,17 +86,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Yep, Looks Like Dirt - " + body.name;
+            return Localizer.Format("#LOC_Ach_318") + body.name;
         }
 
         public override string getText()
         {
-            return "Take a surface sample on " + body.theName + ".";
+            return Localizer.Format("#LOC_Ach_319") + body.theName + ".";
         }
 
         public override string getKey()
         {
-            return "surfaceSample." + body.name;
+            return Localizer.Format("#LOC_Ach_320") + body.name;
         }
     }
 
@@ -199,17 +200,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Found Some Space Dirt";
+            return Localizer.Format("#LOC_Ach_321");
         }
 
         public override string getText()
         {
-            return "Take a sample of an asteroid.";
+            return Localizer.Format("#LOC_Ach_322");
         }
 
         public override string getKey()
         {
-            return "asteroidSample";
+            return Localizer.Format("#LOC_Ach_55");
         }
     }
 }

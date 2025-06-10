@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -295,7 +296,7 @@ namespace Achievements
                     }
                     catch (Exception)
                     {
-                        Log.Warning("exception while loading types, ignoring assembly: " + assembly.FullName);
+                        Log.Warning(Localizer.Format("#LOC_Ach_44") + assembly.FullName);
                     }
                 }
             }

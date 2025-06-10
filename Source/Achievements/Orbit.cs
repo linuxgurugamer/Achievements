@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,9 +120,11 @@ namespace Achievements
 
         public override string getKey()
         {
+            #region NO_LOCALIZATION
             string str = "stableOrbit." + minAltitude.ToString("F0") + "." +maxAltitude.ToString("F0") +"."+
                 minEccentricity.ToString("F0") + "." + maxEccentricity.ToString("F0") + "." +
                 minInclination.ToString("F0") + "." + maxInclination.ToString("F0");
+            #endregion
             foreach (Body body in bodies)
                 str += "." + body.name;
             return str;
@@ -138,17 +141,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Going Around and Around";
+            return Localizer.Format("#LOC_Ach_274");
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit around a celestial body.";
+            return Localizer.Format("#LOC_Ach_275");
         }
 
         public override string getKey()
         {
-            return "stableOrbit";
+            return Localizer.Format("#LOC_Ach_276");
         }
     }
 
@@ -168,17 +171,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Going Around and Around - " + body.name;
+            return Localizer.Format("#LOC_Ach_277") + body.name;
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit around " + body.theName + ".";
+            return Localizer.Format("#LOC_Ach_278") + body.theName + ".";
         }
 
         public override string getKey()
         {
-            return "stableOrbit." + body.name;
+            return Localizer.Format("#LOC_Ach_279") + body.name;
         }
     }
 
@@ -211,17 +214,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "It's Round, Too";
+            return Localizer.Format("#LOC_Ach_280");
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit around another planet.";
+            return Localizer.Format("#LOC_Ach_281");
         }
 
         public override string getKey()
         {
-            return "stableOrbit.extraKerbalPlanet";
+            return Localizer.Format("#LOC_Ach_282");
         }
     }
 
@@ -234,17 +237,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Little Round Rock";
+            return Localizer.Format("#LOC_Ach_283");
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit around a moon.";
+            return Localizer.Format("#LOC_Ach_284");
         }
 
         public override string getKey()
         {
-            return "stableOrbit.moon";
+            return Localizer.Format("#LOC_Ach_285");
         }
     }
 
@@ -289,17 +292,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Kessler Syndrome";
+            return Localizer.Format("#LOC_Ach_286");
         }
 
         public override string getText()
         {
-            return "Have 100 debris objects in orbit around Kerbin.";
+            return Localizer.Format("#LOC_Ach_287");
         }
 
         public override string getKey()
         {
-            return "kesslerSyndrome";
+            return Localizer.Format("#LOC_Ach_288");
         }
     }
 
@@ -347,17 +350,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Step 1: Orbit";
+            return Localizer.Format("#LOC_Ach_289");
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit without staging or losing any parts.";
+            return Localizer.Format("#LOC_Ach_290");
         }
 
         public override string getKey()
         {
-            return "stableOrbit.ssto";
+            return Localizer.Format("#LOC_Ach_291");
         }
     }
 
@@ -394,17 +397,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Who Needs Spaceships, Anyway?";
+            return Localizer.Format("#LOC_Ach_292");
         }
 
         public override string getText()
         {
-            return "Get into a stable orbit by only using the EVA jet pack.";
+            return Localizer.Format("#LOC_Ach_293");
         }
 
         public override string getKey()
         {
-            return "stableOrbit.jetPack";
+            return Localizer.Format("#LOC_Ach_294");
         }
     }
 
@@ -418,17 +421,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "One Way Trip";
+            return Localizer.Format("#LOC_Ach_295");
         }
 
         public override string getText()
         {
-            return "Get into an escape trajectory out of the Sun's sphere of influence.";
+            return Localizer.Format("#LOC_Ach_296");
         }
 
         public override string getKey()
         {
-            return "orbit.escapeSun";
+            return Localizer.Format("#LOC_Ach_297");
         }
     }
 
@@ -467,17 +470,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Is it a Plane? Is it a Bird?";
+            return Localizer.Format("#LOC_Ach_298");
         }
 
         public override string getText()
         {
-            return "Prevent an asteroid impact.";
+            return Localizer.Format("#LOC_Ach_299");
         }
 
         public override string getKey()
         {
-            return "orbit.asteroid.preventImpact";
+            return Localizer.Format("#LOC_Ach_300");
         }
     }
 
@@ -516,17 +519,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "Once in a New Moon";
+            return Localizer.Format("#LOC_Ach_301");
         }
 
         public override string getText()
         {
-            return "Move an asteroid into a stable orbit around a celestial body.";
+            return Localizer.Format("#LOC_Ach_302");
         }
 
         public override string getKey()
         {
-            return "orbit.asteroid.moveIntoStableOrbit";
+            return Localizer.Format("#LOC_Ach_303");
         }
     }
 }

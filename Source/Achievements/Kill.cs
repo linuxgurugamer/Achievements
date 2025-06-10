@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,10 @@ namespace Achievements {
 	internal class KillFactory : AchievementFactory {
 		public IEnumerable<Achievement> getAchievements() {
 			return new Achievement[] {
-				new Kill(1, "Ouch!", "Kill a crew member.", true),
-				new Kill(10, "Bloodbath", "Kill 10 crew members in a single incident.", true),
-				new Kill(10, "Careless", "Kill 10 crew members.", false),
-				new Kill(100, "Death Trap", "Kill 100 crew members.", false),
+				new Kill(1, Localizer.Format("#LOC_Ach_193"), Localizer.Format("#LOC_Ach_194"), true),
+				new Kill(10, Localizer.Format("#LOC_Ach_195"), Localizer.Format("#LOC_Ach_196"), true),
+				new Kill(10, Localizer.Format("#LOC_Ach_197"), Localizer.Format("#LOC_Ach_198"), false),
+				new Kill(100, Localizer.Format("#LOC_Ach_199"), Localizer.Format("#LOC_Ach_200"), false),
 				new KillJebediahAgain().hide()
 			};
 		}
@@ -80,7 +81,7 @@ namespace Achievements {
 		}
 
 		public override string getKey() {
-			return resetOnVesselChange ? "kill.singleIncident." + minRequired : "kill." + minRequired;
+			return resetOnVesselChange ? Localizer.Format("#LOC_Ach_201") + minRequired : Localizer.Format("#LOC_Ach_202") + minRequired;
 		}
 	}
 
@@ -99,7 +100,7 @@ namespace Achievements {
 
 		private void onCrewKilled(EventReport report) {
 			string crewName = report.sender;
-			if (crewName == "Jebediah Kerman") {
+			if (crewName == Localizer.Format("#LOC_Ach_203")) {
 				// make sure to not double-count
 				if (!killed) {
 					increaseCounter();
@@ -109,15 +110,15 @@ namespace Achievements {
 		}
 
 		public override string getTitle() {
-			return "What? Again?";
+			return Localizer.Format("#LOC_Ach_204");
 		}
 
 		public override string getText() {
-			return "Kill Jebediah Kerman more than once.";
+			return Localizer.Format("#LOC_Ach_205");
 		}
 
 		public override string getKey() {
-			return "kill.jebediahAgain";
+			return Localizer.Format("#LOC_Ach_206");
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+using KSP.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,8 +43,8 @@ public class Coordinates
         double clampedLongitude = MuUtils.ClampDegrees180(longitude);
         double latitudeAbs  = Math.Abs(latitude);
         double longitudeAbs = Math.Abs(clampedLongitude);
-        return latitudeAbs.ToString("F" + precision) + "° " + (latitude > 0 ? "N" : "S") + (newline ? "\n" : ", ")
-            + longitudeAbs.ToString("F" + precision) + "° " + (clampedLongitude > 0 ? "E" : "W");
+        return latitudeAbs.ToString(Localizer.Format("#LOC_Ach_374") + precision) + "° " + (latitude > 0 ? Localizer.Format("#LOC_Ach_375") : Localizer.Format("#LOC_Ach_376")) + (newline ? "\n" : ", ")
+            + longitudeAbs.ToString(Localizer.Format("#LOC_Ach_374") + precision) + "° " + (clampedLongitude > 0 ? Localizer.Format("#LOC_Ach_377") : Localizer.Format("#LOC_Ach_378"));
     }
 
     public string ToStringDecimal(bool newline = false, int precision = 3)

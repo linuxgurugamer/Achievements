@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber && Danny Moffre
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace Achievements
         public IEnumerable<Achievement> getAchievements()
         {
             return new Achievement[] {
-				new ReputationAllocations("Fame And Glory","Achieve at least 400 points in reputation","reputation.fame.400",400f,false),
-                new ReputationAllocations("God Among Kerbals","Achieve at Least 800 points in reputation","reputation.fame.800",800f,false),
-                new ReputationAllocations("The Devil Wears Prada","Achieve below -400 in reputation","reputation.fame.-400",-400f,true)
+				new ReputationAllocations(Localizer.Format("#LOC_Ach_304"),Localizer.Format("#LOC_Ach_305"),Localizer.Format("#LOC_Ach_306"),400f,false),
+                new ReputationAllocations(Localizer.Format("#LOC_Ach_307"),Localizer.Format("#LOC_Ach_308"),Localizer.Format("#LOC_Ach_309"),800f,false),
+                new ReputationAllocations(Localizer.Format("#LOC_Ach_310"),Localizer.Format("#LOC_Ach_311"),Localizer.Format("#LOC_Ach_312"),-400f,true)
 			};
         }
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,9 @@ namespace Achievements
         public IEnumerable<Achievement> getAchievements()
         {
             return new Achievement[] {
-                new ContractAllocations("Starting Your Adventure","Complete 1 Contract","Complete.Contracts.1",1),
-                new ContractAllocations("Contract Enthusiast","Complete 20 Contracts","Complete.Contracts.20",20),
-                new ContractAllocations("Grind Machine","Complete 100 Contracts","Complete.Contracts.100",100)
+                new ContractAllocations(Localizer.Format("#LOC_Ach_103"),Localizer.Format("#LOC_Ach_104"),Localizer.Format("#LOC_Ach_105"),1),
+                new ContractAllocations(Localizer.Format("#LOC_Ach_106"),Localizer.Format("#LOC_Ach_107"),Localizer.Format("#LOC_Ach_108"),20),
+                new ContractAllocations(Localizer.Format("#LOC_Ach_109"),Localizer.Format("#LOC_Ach_110"),Localizer.Format("#LOC_Ach_111"),100)
             };
         }
 

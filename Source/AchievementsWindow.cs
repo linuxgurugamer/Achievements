@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace Achievements
         private Vector2 achievementsScrollPos;
         private Dictionary<Achievement, AchievementGUI> achievementGuis = new Dictionary<Achievement, AchievementGUI>();
         private Achievement expandedAchievement;
-        private EditorLock editorLock = new EditorLock("Achievements_achievementsList");
+        private EditorLock editorLock = new EditorLock(Localizer.Format("#LOC_Ach_8"));
 
         internal AchievementsWindow(Dictionary<Category, IEnumerable<Achievement>> achievements,
             Dictionary<string, AchievementEarn> earnedAchievements /*, bool newVersionAvailable */)
@@ -94,17 +95,17 @@ namespace Achievements
 			if (newVersionAvailable) {
 				Color oldColor = GUI.color;
 				GUI.color = Color.yellow;
-				GUILayout.Label("A newer version of this plugin is available.");
+				GUILayout.Label(Localizer.Format("#LOC_Ach_9"));
 				GUI.color = oldColor;
 				GUILayout.Space(10);
-				if (GUILayout.Button("Download Page")) {
+				if (GUILayout.Button(Localizer.Format("#LOC_Ach_10"))) {
 					Application.OpenURL(FORUM_THREAD_URL);
 				}
 			}
 #endif
             GUILayout.FlexibleSpace();
 #if false
-			if (GUILayout.Button("Forums Feedback Thread")) {
+			if (GUILayout.Button(Localizer.Format("#LOC_Ach_11"))) {
 				Application.OpenURL(FORUM_THREAD_URL);
 			}
 #endif
@@ -159,8 +160,8 @@ namespace Achievements
                 }
             }
             GUILayout.FlexibleSpace();
-            showEarned = GUILayout.Toggle(showEarned, "Show earned only");
-            showAllEarned = GUILayout.Toggle(showAllEarned, "Show all earned only");
+            showEarned = GUILayout.Toggle(showEarned, Localizer.Format("#LOC_Ach_12"));
+            showAllEarned = GUILayout.Toggle(showAllEarned, Localizer.Format("#LOC_Ach_13"));
             GUILayout.EndVertical();
         }
 

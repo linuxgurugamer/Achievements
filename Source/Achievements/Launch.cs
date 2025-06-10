@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,11 @@ namespace Achievements {
 	internal class LaunchFactory : AchievementFactory {
 		public IEnumerable<Achievement> getAchievements() {
 			return new Achievement[] {
-				new Launch(1, "Up, Up, and Away"),
-				new Launch(10, "10 Launches"),
-				new Launch(100, "100 Launches"),
-				new Launch(500, "500 Launches"),
-				new Launch(1000, "1000 Launches")
+				new Launch(1, Localizer.Format("#LOC_Ach_266")),
+				new Launch(10, Localizer.Format("#LOC_Ach_267")),
+				new Launch(100, Localizer.Format("#LOC_Ach_268")),
+				new Launch(500, Localizer.Format("#LOC_Ach_269")),
+				new Launch(1000, Localizer.Format("#LOC_Ach_270"))
 			};
 		}
 
@@ -57,11 +58,14 @@ namespace Achievements {
 		}
 
 		public override string getText() {
-			return (minRequired == 1) ? "Launch a vessel." : "Launch " + minRequired.ToString("D0") + " vessels.";
-		}
+			return (minRequired == 1) ? Localizer.Format("#LOC_Ach_271") : Localizer.Format("#LOC_Ach_272") +
+            #region NO_LOCALIZATION
+                minRequired.ToString("D0") + " vessels.";
+            #endregion
+        }
 
-		public override string getKey() {
-			return "launch." + minRequired;
+        public override string getKey() {
+			return Localizer.Format("#LOC_Ach_273") + minRequired;
 		}
 	}
 }

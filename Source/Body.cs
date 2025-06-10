@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,37 +36,37 @@ namespace Achievements
 
     public class Body
     {
-        internal static readonly Body SUN = new Body("Sun", "the Sun");
+        internal static readonly Body SUN = new Body(Localizer.Format("#LOC_Ach_14"), Localizer.Format("#LOC_Ach_15"));
 
-        internal static readonly Body MOHO = new Body("Moho");
-        internal static readonly Body EVE = new Body("Eve");
-        internal static readonly Body KERBIN = new Body("Kerbin");
-        internal static readonly Body DUNA = new Body("Duna");
-        internal static readonly Body DRES = new Body("Dres");
-        internal static readonly Body JOOL = new Body("Jool");
-        internal static readonly Body EELOO = new Body("Eeloo");
+        internal static readonly Body MOHO = new Body(Localizer.Format("#LOC_Ach_16"));
+        internal static readonly Body EVE = new Body(Localizer.Format("#LOC_Ach_17"));
+        internal static readonly Body KERBIN = new Body(Localizer.Format("#LOC_Ach_18"));
+        internal static readonly Body DUNA = new Body(Localizer.Format("#LOC_Ach_19"));
+        internal static readonly Body DRES = new Body(Localizer.Format("#LOC_Ach_20"));
+        internal static readonly Body JOOL = new Body(Localizer.Format("#LOC_Ach_21"));
+        internal static readonly Body EELOO = new Body(Localizer.Format("#LOC_Ach_22"));
 
-        internal static readonly Body GILLY = new Body("Gilly");
-        internal static readonly Body MUN = new Body("Mun", "the Mun");
-        internal static readonly Body MINMUS = new Body("Minmus");
-        internal static readonly Body IKE = new Body("Ike");
-        internal static readonly Body LAYTHE = new Body("Laythe");
-        internal static readonly Body VALL = new Body("Vall");
-        internal static readonly Body TYLO = new Body("Tylo");
-        internal static readonly Body BOP = new Body("Bop");
-        internal static readonly Body POL = new Body("Pol");
+        internal static readonly Body GILLY = new Body(Localizer.Format("#LOC_Ach_23"));
+        internal static readonly Body MUN = new Body(Localizer.Format("#LOC_Ach_24"), Localizer.Format("#LOC_Ach_25"));
+        internal static readonly Body MINMUS = new Body(Localizer.Format("#LOC_Ach_26"));
+        internal static readonly Body IKE = new Body(Localizer.Format("#LOC_Ach_27"));
+        internal static readonly Body LAYTHE = new Body(Localizer.Format("#LOC_Ach_28"));
+        internal static readonly Body VALL = new Body(Localizer.Format("#LOC_Ach_29"));
+        internal static readonly Body TYLO = new Body(Localizer.Format("#LOC_Ach_30"));
+        internal static readonly Body BOP = new Body(Localizer.Format("#LOC_Ach_31"));
+        internal static readonly Body POL = new Body(Localizer.Format("#LOC_Ach_32"));
 #if false
-        internal static readonly Body ABLATE = new Body("Ablate");
-        internal static readonly Body ASCENSION = new Body("Ascension");
-        internal static readonly Body ERIN = new Body("Erin");
-        internal static readonly Body POCK = new Body("Pock");
-        internal static readonly Body RINGLE = new Body("Ringle");
-        internal static readonly Body SENTAR = new Body("Sentar");
-        internal static readonly Body SKELTON = new Body("Skelton");
-        internal static readonly Body THUD = new Body("Thud");
-        internal static readonly Body SERIOUS = new Body("Serious");
-        internal static readonly Body JOKER = new Body("Joker");
-        internal static readonly Body INACCESSABLE = new Body("Inaccessable");
+        internal static readonly Body ABLATE = new Body(Localizer.Format("#LOC_Ach_33"));
+        internal static readonly Body ASCENSION = new Body(Localizer.Format("#LOC_Ach_34"));
+        internal static readonly Body ERIN = new Body(Localizer.Format("#LOC_Ach_35"));
+        internal static readonly Body POCK = new Body(Localizer.Format("#LOC_Ach_36"));
+        internal static readonly Body RINGLE = new Body(Localizer.Format("#LOC_Ach_37"));
+        internal static readonly Body SENTAR = new Body(Localizer.Format("#LOC_Ach_38"));
+        internal static readonly Body SKELTON = new Body(Localizer.Format("#LOC_Ach_39"));
+        internal static readonly Body THUD = new Body(Localizer.Format("#LOC_Ach_40"));
+        internal static readonly Body SERIOUS = new Body(Localizer.Format("#LOC_Ach_41"));
+        internal static readonly Body JOKER = new Body(Localizer.Format("#LOC_Ach_42"));
+        internal static readonly Body INACCESSABLE = new Body(Localizer.Format("#LOC_Ach_43"));
 #endif
         internal static readonly IEnumerable<Body> STOCK_ALL = new Body[] { SUN, MOHO, EVE, KERBIN, DUNA, DRES, JOOL, EELOO, GILLY, MUN, MINMUS, IKE, LAYTHE, VALL, TYLO, BOP, POL };
         //internal static readonly IEnumerable<Body> STOCK_PLANETS = new Body[] { MOHO, EVE, KERBIN, DUNA, DRES, JOOL, EELOO };

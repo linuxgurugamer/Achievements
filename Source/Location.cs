@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using KSP.UI.Screens.Settings.Controls.Values;
 using System;
 using System.Collections.Generic;
@@ -60,10 +61,10 @@ namespace Achievements
         override public string ToString()
         {
             if (circle)
-            return "Location.body: " + body.name + ", latitude/longitude: " + latitude + "/" + longitude +
-                ", radius: " + radius + ", circle: " + circle;
-            return "Location.body: " + body.name + ", latitude/longitude: " + latitude + "/" + longitude +
-                ", latitude2/longitude2: " + latitude2 + "/" + longitude2;
+            return Localizer.Format("#LOC_Ach_46") + body.name + Localizer.Format("#LOC_Ach_47") + latitude + "/" + longitude +
+                Localizer.Format("#LOC_Ach_48") + radius + Localizer.Format("#LOC_Ach_49") + circle;
+            return Localizer.Format("#LOC_Ach_46") + body.name + Localizer.Format("#LOC_Ach_47") + latitude + "/" + longitude +
+                Localizer.Format("#LOC_Ach_50") + latitude2 + "/" + longitude2;
         }
 
 

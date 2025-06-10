@@ -1,4 +1,5 @@
-﻿using System;
+using KSP.Localization;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
@@ -11,10 +12,10 @@ namespace Achievements
 
     public class AchOptions : GameParameters.CustomParameterNode
     {
-        public override string Title { get { return "Default Settings"; } }
+        public override string Title { get { return Localizer.Format("#LOC_Ach_52"); } }
         public override GameParameters.GameMode GameMode { get { return GameParameters.GameMode.ANY; } }
-        public override string Section { get { return "Achievements"; } }
-        public override string DisplaySection { get { return "Achievements"; } }
+        public override string Section { get { return Localizer.Format("#LOC_Ach_2"); } }
+        public override string DisplaySection { get { return Localizer.Format("#LOC_Ach_2"); } }
         public override int SectionOrder { get { return 1; } }
         public override bool HasPresets { get { return false; } }
 
@@ -24,7 +25,7 @@ namespace Achievements
 
 
         [GameParameters.CustomFloatParameterUI("Achievement Display Time (seconds)", minValue = 2f, maxValue = 20f,
-          toolTip = "How long to display the achievement when obtained")]
+          toolTip = "#LOC_Ach_53")]
         public float achievementDisplayTime = 10f;
 
        

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using Smooth.Collections;
 using System;
 using System.Collections.Generic;
@@ -58,40 +59,40 @@ namespace Achievements
         }
         string[] quotes =
         {
-            "One small step for a kerbal",
-            "You need to be content with small steps",
-            "Each step reveals a new horizon",
-            "I can see my house from here",
-            "Success!",
-            "Hot Dog, that may have been a small one for Neil, but that's a long one for me!",
-            "Hot dog, we made it!",
-            "It may be just rocks, but its new rocks!",
-            "That's one sm- oof! hold on. I tripped. Lemme try that again.",
-            "Wait... we actually made it?",
-            "Hey look, we didn't die!",
-            "That's one small step- who put this thing here?!",
-            "What the heck is tha- [CRACKLING]",
-            "Okay. Now what?",
-            "Where are the snacks?",
-            "Docking with mothership comple--wait, that's a rock.",
-            "Yep, thats me. You're probably wondering how i got myself into this situation.",
-            "that's one big tumble from the hatch, one giant leap for kerbalkind. how do i get back up?",
-            "Finally back home! ...oh....oh no...",
-            "I left the snacks in the lander, can we do this over?",
-            "uhh... i can't think of anything, cut the camera. we need to do this shot over again.",
-            "Alright, wheres the flag, i want to get home.",
-            "This landing was sponsored by the K Cola corporation.",
-            "finally some fresh air. wait what do you mean i cant take my helmet off?",
-            "This landing was sponsored by SpaceTux",
-            "flag, science, and get out of here",
-            "To infinity and beyond lol...",
-            "Weeeee!",
-            "Where's the bathroom?",
-            "What's that smell??",
-            "Elon lied to me !",
-            "Damn my legs hurt",
-            "I thought it would be less quiet",
-            "I can't see my house from here"
+            Localizer.Format("#LOC_Ach_132"),
+            Localizer.Format("#LOC_Ach_133"),
+            Localizer.Format("#LOC_Ach_134"),
+            Localizer.Format("#LOC_Ach_135"),
+            Localizer.Format("#LOC_Ach_136"),
+            Localizer.Format("#LOC_Ach_137"),
+            Localizer.Format("#LOC_Ach_138"),
+            Localizer.Format("#LOC_Ach_139"),
+            Localizer.Format("#LOC_Ach_140"),
+            Localizer.Format("#LOC_Ach_141"),
+            Localizer.Format("#LOC_Ach_142"),
+            Localizer.Format("#LOC_Ach_143"),
+            Localizer.Format("#LOC_Ach_144"),
+            Localizer.Format("#LOC_Ach_145"),
+            Localizer.Format("#LOC_Ach_146"),
+            Localizer.Format("#LOC_Ach_147"),
+            Localizer.Format("#LOC_Ach_148"),
+            Localizer.Format("#LOC_Ach_149"),
+            Localizer.Format("#LOC_Ach_150"),
+            Localizer.Format("#LOC_Ach_151"),
+            Localizer.Format("#LOC_Ach_152"),
+            Localizer.Format("#LOC_Ach_153"),
+            Localizer.Format("#LOC_Ach_154"),
+            Localizer.Format("#LOC_Ach_155"),
+            Localizer.Format("#LOC_Ach_156"),
+            Localizer.Format("#LOC_Ach_157"),
+            Localizer.Format("#LOC_Ach_158"),
+            Localizer.Format("#LOC_Ach_159"),
+            Localizer.Format("#LOC_Ach_160"),
+            Localizer.Format("#LOC_Ach_161"),
+            Localizer.Format("#LOC_Ach_162"),
+            Localizer.Format("#LOC_Ach_163"),
+            Localizer.Format("#LOC_Ach_164"),
+            Localizer.Format("#LOC_Ach_165")
         };
        
 
@@ -109,18 +110,18 @@ namespace Achievements
                 IEnumerable<Body> b = Body.flatten(bodies);
                 List<IEnumerable<Body>> ienumBodyList = new List<IEnumerable<Body>>();
                 ienumBodyList.Add(b);
-                aList.Add(new evaAchievements(ienumBodyList,"Set foot on " + a.theName, quotes[quoteCnt],  "landing." + a.name));
+                aList.Add(new evaAchievements(ienumBodyList,Localizer.Format("#LOC_Ach_166") + a.theName, quotes[quoteCnt],  Localizer.Format("#LOC_Ach_167") + a.name));
                 quoteCnt++;
                 if (quoteCnt >= quotes.Length)
                     quoteCnt = 0;
             }
 
-            aList.Add(new AllBodiesEVA(Body.ALL_LANDABLE, "Steps in the Sand", "Set foot on every planet and moon.", "landing.allBodiesEVA"));
+            aList.Add(new AllBodiesEVA(Body.ALL_LANDABLE, Localizer.Format("#LOC_Ach_168"), Localizer.Format("#LOC_Ach_169"), Localizer.Format("#LOC_Ach_170")));
             return aList.ToArray();
 #if false
             return new Achievement[] {
                 //new AllBodiesEVA(Body.STOCK_LANDABLE, "Steps in the Sand", "Set foot on every planet and moon.", "landing.allBodiesEVA"),
-                new AllBodiesEVA(Body.ALL_LANDABLE, "Steps in the Sand", "Set foot on every planet and moon.", "landing.allBodiesEVA")
+                new AllBodiesEVA(Body.ALL_LANDABLE, Localizer.Format("#LOC_Ach_168"), Localizer.Format("#LOC_Ach_169"), Localizer.Format("#LOC_Ach_170"))
             };
 #endif
         }

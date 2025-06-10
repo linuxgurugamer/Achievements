@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Achievements
         private string title;
         private int id = new System.Random().Next(int.MaxValue);
         private Rect rect = new Rect(100, 100, 200, 0);
-        private EditorLock editorLock = new EditorLock("Achievements_info");
+        private EditorLock editorLock = new EditorLock(Localizer.Format("#LOC_Ach_45"));
 
         internal InfoWindow(string title)
         {

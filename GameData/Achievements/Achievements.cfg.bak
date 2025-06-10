@@ -1,0 +1,86 @@
+ACHIEVEMENTS
+{
+
+	//SURFACESAMPLE
+	//{
+	//	key = allStock.surfaceSample.allBodies
+	//	title = Pile of Dirt
+	//	text = Take surface samples on all planets and moons.
+	//	bodies = STOCK_ALL
+	//	// bodies = Moho Eve Kerbin Duna Dres Eelo Gilly Mun Minmus Ike Laythe Vall Tylo Bop Pol
+	//
+	//}
+	//SURFACESAMPLE
+	//{
+	//	key = allBodies.surfaceSample.allBodies
+	//	title = Another Pile of Dirt
+	//	text = Take surface samples on all planets and moons in the system(s).
+	//	bodies = ALL_PLANETS
+	//	//bodies = Moho Eve Kerbin Duna Dres Eelo Gilly Mun Minmus Ike Laythe Vall Tylo Bop Pol
+	//}
+
+	ORBITACHIEVEMENT
+	{
+		key = kerbin.polar
+		title = Polar Orbit
+		text = Get into a polar orbit around Kerbin
+		bodies = KERBIN
+		minAltitude = 85000
+		maxAltitude = -1
+		minInclination = 85
+        maxInclination = 90
+	}
+
+	ORBITACHIEVEMENT
+	{
+		key = all.polar
+		title = BODY Polar Orbit
+		text = Get into a polar orbit around BODY
+		bodies = ALL_PLANETS_WITHOUT_HOMEWORLD
+		bodyRequirement = individual
+		minAltitude = 85000
+		maxAltitude = -1
+		minInclination = 85
+        maxInclination = 90
+	}
+	
+	LOCATION
+	{
+		name = KerbinNorthPole.location
+		body = Kerbin
+		// can also use bodies =
+		// Following defines a rectangle if the second pair is set
+		latitude = 90 N
+		longitude = 0 E
+		// following second corner of rectangle, optional
+		//latitude2 =   float N/S
+		//longitude2 =  float E/W
+		// If second pair not set, then radius is needed
+		radius = 10000
+	}
+
+	//LANDING
+	//{
+	//	key = Kerbin.landing
+	//	bodies = Kerbin
+	//	title = Land on Kerbin
+	//	text = Taking a Bath
+	//	splash = true
+	//}
+
+	//LANDING
+	//{
+	//	key = KerbinNorthPole.landing
+	//	title = Land at Kerbin's North Pole - I'm Freezing Out Here
+	//	text = Land on the north pole of Kerbin
+	//	bodies = Kerbin
+	//	// following are all optional
+	//	splash = false
+	//	//stableOrbit = false (if true, minAltitude MUST be set)
+	//	//minAltitude =
+	//
+	//
+	//	maxDegreesLatitudeFromEquator =
+	//	locations = KerbinNorthPole.location
+	//}
+}

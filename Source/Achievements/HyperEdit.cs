@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,15 +67,15 @@ namespace Achievements {
 		}
 
 		public override string getTitle() {
-			return "Beam Me Up, Scotty";
+			return Localizer.Format("#LOC_Ach_186");
 		}
 
 		public override string getText() {
-			return "Get into a stable orbit without launching.";
+			return Localizer.Format("#LOC_Ach_187");
 		}
 
 		public override string getKey() {
-			return "stableOrbit.hyperEdit";
+			return Localizer.Format("#LOC_Ach_188");
 		}
 	}
 }

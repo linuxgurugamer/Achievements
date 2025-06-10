@@ -1,4 +1,5 @@
-﻿using System;
+using KSP.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ public class GLUtils
     {
         get
         {
-            if (_material == null) _material = new Material(Shader.Find("Particles/Additive"));
+            if (_material == null) _material = new Material(Shader.Find(Localizer.Format("#LOC_Ach_373")));
             return _material;
         }
     }

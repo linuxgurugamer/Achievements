@@ -1,4 +1,4 @@
-﻿/*
+/*
 Achievements - Brings achievements to Kerbal Space Program.
 Copyright (C) 2013-2014 Maik Schreiber
 
@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,41 +34,41 @@ namespace Achievements
             achievements.AddRange(new Achievement[] {
                 new Landing(false, -1),
 
-                new BodyLanding(Body.MOHO, false, "Hot Foot"),
-                new BodyLanding(Body.EVE, false, "Good Luck Getting Back"),
-                new BodyLanding(Body.KERBIN, false, "Safe and Sound"),
-                new BodyLanding(Body.DUNA, false, "One Giant Leap"),
-                new BodyLanding(Body.DRES, false, "Asteroid Miner"),
-                new BodyLanding(Body.EELOO, false, "Far Out"),
-                new BodyLanding(Body.GILLY, false, "Lightfoot"),
-                new BodyLanding(Body.MUN, false, "One Small Step"),
-                new BodyLanding(Body.MINMUS, false, "Little Green Moon"),
-                new BodyLanding(Body.IKE, false, "We Like Ike"),
-                new BodyLanding(Body.LAYTHE, false, "Almost Feels Like Home"),
-                new BodyLanding(Body.VALL, false, "Cold Stop"),
-                new BodyLanding(Body.TYLO, false, "Who Needs Aerobraking?"),
-                new BodyLanding(Body.BOP, false, "Kraken Hunter"),
-                new BodyLanding(Body.POL, false, "Allergy Season"),
+                new BodyLanding(Body.MOHO, false, Localizer.Format("#LOC_Ach_207")),
+                new BodyLanding(Body.EVE, false, Localizer.Format("#LOC_Ach_208")),
+                new BodyLanding(Body.KERBIN, false, Localizer.Format("#LOC_Ach_209")),
+                new BodyLanding(Body.DUNA, false, Localizer.Format("#LOC_Ach_210")),
+                new BodyLanding(Body.DRES, false, Localizer.Format("#LOC_Ach_211")),
+                new BodyLanding(Body.EELOO, false, Localizer.Format("#LOC_Ach_212")),
+                new BodyLanding(Body.GILLY, false, Localizer.Format("#LOC_Ach_213")),
+                new BodyLanding(Body.MUN, false, Localizer.Format("#LOC_Ach_214")),
+                new BodyLanding(Body.MINMUS, false, Localizer.Format("#LOC_Ach_215")),
+                new BodyLanding(Body.IKE, false, Localizer.Format("#LOC_Ach_216")),
+                new BodyLanding(Body.LAYTHE, false, Localizer.Format("#LOC_Ach_217")),
+                new BodyLanding(Body.VALL, false, Localizer.Format("#LOC_Ach_218")),
+                new BodyLanding(Body.TYLO, false, Localizer.Format("#LOC_Ach_219")),
+                new BodyLanding(Body.BOP, false, Localizer.Format("#LOC_Ach_220")),
+                new BodyLanding(Body.POL, false, Localizer.Format("#LOC_Ach_221")),
 
-                new BodyLanding(Body.KERBIN, true, "Taking a Bath"),
-                new BodyLanding(Body.EVE, true, "Looks Like Water, Feels Like Water"),
-                new BodyLanding(Body.LAYTHE, true, "Just As Wet As At Home")
+                new BodyLanding(Body.KERBIN, true, Localizer.Format("#LOC_Ach_222")),
+                new BodyLanding(Body.EVE, true, Localizer.Format("#LOC_Ach_223")),
+                new BodyLanding(Body.LAYTHE, true, Localizer.Format("#LOC_Ach_224"))
             });
 
             foreach (Body body in Body.ALL_LANDABLE.Where(b => !b.isStock()))
             {
-                achievements.Add(new BodyLanding(body, false, "One Small Step - " + body.name).addon());
+                achievements.Add(new BodyLanding(body, false, Localizer.Format("#LOC_Ach_225") + body.name).addon());
             }
             foreach (Body body in Body.ALL_SPLASHABLE.Where(b => !b.isStock()))
             {
-                achievements.Add(new BodyLanding(body, true, "Taking a Bath - " + body.name).addon());
+                achievements.Add(new BodyLanding(body, true, Localizer.Format("#LOC_Ach_226") + body.name).addon());
             }
 
             achievements.AddRange(new Achievement[] {
                 new AllCrewAliveLanding(false,
-                    "I Think We Made It", "Land on the surface of a celestial body with all crew members still alive.", "landing.allCrewAlive"),
+                    Localizer.Format("#LOC_Ach_227"), Localizer.Format("#LOC_Ach_228"), Localizer.Format("#LOC_Ach_229")),
                 new AllCrewAliveLanding(true,
-                    "That Was Close", "Abort a launch and land with all crew members still alive.", "landing.allCrewAlive.abort"),
+                    Localizer.Format("#LOC_Ach_230"), Localizer.Format("#LOC_Ach_231"), Localizer.Format("#LOC_Ach_232")),
                 new EnginesDestroyedLanding(),
 
                 new BodyLanding(Body.MUN, false, true, -1, -1, new Location[] {
@@ -77,24 +78,24 @@ namespace Achievements
                     new Location(Body.MUN, 61.936.north(), 32.985.west(), 48000),
                     new Location(Body.MUN, 2.063.north(), 56.534.west(), 39000),
                     new Location(Body.MUN, 5.672.north(), 151.283.west(), 37000)
-                }, "Deep Impact", "Land inside one of the big craters on the Mun.", "landing.mun.crater"),
-                new BodyLanding(Body.KERBIN, false, true, -1, -1, new Location[] { Location.KSC }, "Home Sweet Home", "Land at the Kerbal Space Center.", "landing.ksc"),
+                }, Localizer.Format("#LOC_Ach_233"), Localizer.Format("#LOC_Ach_234"), Localizer.Format("#LOC_Ach_235")),
+                new BodyLanding(Body.KERBIN, false, true, -1, -1, new Location[] { Location.KSC }, Localizer.Format("#LOC_Ach_236"), Localizer.Format("#LOC_Ach_237"), Localizer.Format("#LOC_Ach_238")),
                 new BodyLanding(Body.KERBIN, false, true, -1, -1, new Location[] { Location.KERBIN_NORTH_POLE, Location.KERBIN_SOUTH_POLE },
-                    "I'm Freezing Out Here", "Land on the north or south pole of Kerbin.", "landing.kerbin.pole"),
+                    Localizer.Format("#LOC_Ach_239"), Localizer.Format("#LOC_Ach_240"), Localizer.Format("#LOC_Ach_241")),
                 new BodyLanding(Body.KERBIN, false, false, 10000, -1, new Location[] { Location.KSC_LAUNCH_PAD },
-                    "Grasshopper", "Land on the Kerbal Space Center launch pad from an altitude of at least 10000 m.", "landing.kscLaunchPad"),
+                    Localizer.Format("#LOC_Ach_242"), Localizer.Format("#LOC_Ach_243"), Localizer.Format("#LOC_Ach_244")),
                 new BodyLanding(Body.KERBIN, false, false, 10000, -1, new Location[] { Location.KSC_HELICOPTER_PAD },
-                    "Chopper License", "Land on the Kerbal Space Center helicopter pad from an altitude of at least 10000 m.", "landing.kscHelicopterPad"),
+                    Localizer.Format("#LOC_Ach_245"), Localizer.Format("#LOC_Ach_246"), Localizer.Format("#LOC_Ach_247")),
                 new BodyLanding(Body.KERBIN, false, false, 10000, -1, new Location[] { Location.KSC_RUNWAY },
-                    "Pilot License", "Land on the Kerbal Space Center runway from an altitude of at least 10000 m.", "landing.kscRunway"),
+                    Localizer.Format("#LOC_Ach_248"), Localizer.Format("#LOC_Ach_249"), Localizer.Format("#LOC_Ach_250")),
                 new BodyLanding(Body.KERBIN, false, false, 10000, -1, new Location[] { Location.ISLAND_RUNWAY },
-                    "Not As Bad As It Looks", "Land on the island runway from an altitude of at least 10000 m.", "landing.islandRunway"),
+                    Localizer.Format("#LOC_Ach_251"), Localizer.Format("#LOC_Ach_252"), Localizer.Format("#LOC_Ach_253")),
                 new BodyLanding(Body.MUN, false, true, -1, -1, new Location[] { Location.ARMSTRONG_MEMORIAL },
-                    "First... Not", "Land at the Armstrong Memorial.", "landing.armstrongMemorial").hide()
+                    Localizer.Format("#LOC_Ach_254"), Localizer.Format("#LOC_Ach_255"), Localizer.Format("#LOC_Ach_256")).hide()
             });
 
             var l = new BodyLanding(Body.KERBIN, false, true, -1, -1, new Location[] { Location.KERBIN_NORTH_POLE, Location.KERBIN_SOUTH_POLE },
-                    "I'm Freezing Out Here", "Land on the north or south pole of Kerbin.", "landing.kerbin.pole");
+                    Localizer.Format("#LOC_Ach_239"), Localizer.Format("#LOC_Ach_240"), Localizer.Format("#LOC_Ach_241"));
             return achievements;
         }
 
@@ -169,17 +170,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "It's One Small Step";
+            return Localizer.Format("#LOC_Ach_257");
         }
 
         public override string getText()
         {
-            return "Land on the surface of a celestial body.";
+            return Localizer.Format("#LOC_Ach_258");
         }
 
         public override string getKey()
         {
-            return "landing";
+            return Localizer.Format("#LOC_Ach_259");
         }
     }
 
@@ -201,8 +202,8 @@ namespace Achievements
 
         internal BodyLanding(Body body, bool splash, string title)
             : this(body, splash, false, -1, -1, new Location[0], title,
-                splash ? "Splash into an ocean on the surface of " + body.theName + "." : "Land on the surface of " + body.theName + ".",
-                splash ? "landing.splash." + body.name : "landing." + body.name)
+                splash ? Localizer.Format("#LOC_Ach_260") + body.theName + "." : Localizer.Format("#LOC_Ach_261") + body.theName + ".",
+                splash ? Localizer.Format("#LOC_Ach_262") + body.name : Localizer.Format("#LOC_Ach_167") + body.name)
         {
             this.body = body;
             this.splash = splash;
@@ -380,17 +381,17 @@ namespace Achievements
 
         public override string getTitle()
         {
-            return "I Live Here Now";
+            return Localizer.Format("#LOC_Ach_263");
         }
 
         public override string getText()
         {
-            return "Land on the surface of another celestial body with all engines destroyed.";
+            return Localizer.Format("#LOC_Ach_264");
         }
 
         public override string getKey()
         {
-            return "landing.enginesDestroyed";
+            return Localizer.Format("#LOC_Ach_265");
         }
     }
 }
